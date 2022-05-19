@@ -1,0 +1,82 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.Master.cs" Inherits="Prroject_Web_App.Site1" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+     
+    <link rel="stylesheet" href="//cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" />
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="Head" runat="server">
+    </asp:ContentPlaceHolder>
+    <script src="Scripts/jquery-3.6.0.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class='navbar navbar-expand-lg navbar-light bg-light'>
+  <div class='container-fluid'>
+    <a class='navbar-brand' href='/'>Navbar</a>
+    <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
+      <span class='navbar-toggler-icon'></span>
+    </button>
+    <div class='collapse navbar-collapse' id='navbarSupportedContent'>
+      <ul class='navbar-nav me-auto mb-2 mb-lg-0'>
+          <%--treba pravi login--%>
+          <% if (Application["login"] == null)
+              {
+
+               %>
+        <li class='nav-item'>
+          <a class='nav-link active' aria-current='page' href='/'>Login</a>
+        </li>
+        
+       <% }
+           else
+           {  %>
+        <li class='nav-item'>
+          <a class='nav-link' aria-current='page' href='/'>Apartments</a>
+        </li>
+        <li class='nav-item'>
+          <a class='nav-link' onclick="fifi()" href='Tags.aspx'>Tags</a>
+        </li>
+          <% } %>
+      </ul>
+      
+    </div>
+  </div>
+</nav>
+    <form id="Web_app" runat="server">
+        <div>
+            <asp:ContentPlaceHolder ID="Content" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <hr class='mt-4'><div class='text-center'><p>RWA-<%:DateTime.Now.Year %>&copy</p></div>
+    </form>
+     <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <%--uključiti jquery na stranicu--%>
+    <script src="//cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+    <script>$(document).ready(function () {
+            console.log("fefe");
+            $('#table').DataTable();
+        });</script>
+ 
+</body>
+</html>
