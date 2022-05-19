@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.Master.cs" Inherits="Prroject_Web_App.Site1" %>
+﻿rerereeeeeeeeeeeeeeee<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.Master.cs" Inherits="Prroject_Web_App.Site1" %>
 
 <!DOCTYPE html>
 
@@ -53,7 +53,7 @@
         </div>
         <hr class='mt-4'><div class='text-center'><p>RWA-<%:DateTime.Now.Year %>&copy</p></div>
     </form>
-     <!-- Modal -->
+     <!-- Modal --> 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

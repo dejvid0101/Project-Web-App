@@ -8,7 +8,7 @@
             <HeaderTemplate>
 
 <table id="table" class="table">
-  <thead class="thead-dark">
+  <thead class="thead-dark"> 
     <tr>
       <th scope="col">Oznaka apartmana</th>
       <th scope="col">Name</th>
