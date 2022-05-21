@@ -3,7 +3,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Content" runat="server">
         
-    <div class="m-3 col-md-6">
+    <div class="row">
+        <div class="col-md-6">
         <asp:Repeater ID="Repeater1" runat="server">
             <HeaderTemplate>
 
@@ -32,11 +33,11 @@
       <td><%#Eval(nameof(projectLibrary.Models.Apartman.TotalRooms)) %></td>
       <td><%#Eval(nameof(projectLibrary.Models.Apartman.MaxAdults)) %></td>
       <td>
-         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
-
-      </td>
+         <asp:LinkButton ID="LinkButton1" CommandArgument="<%#Eval(nameof(projectLibrary.Models.Apartman.Id)) %>" OnClick="LinkButton1_Click" runat="server">
+             Edit
+             </asp:LinkButton>
+           </td>
+        
         
       
         
@@ -51,8 +52,9 @@
 
   
         </asp:Repeater>
-</div>
-    <div class="m-3 col-md-6">
+
+        </div>
+        <div class="col-md-6">
         <asp:GridView ID="GridView1" AutoGenerateColumns="false" CssClass="tbl" runat="server">
             <Columns>
 <asp:BoundField HeaderText/>
@@ -60,7 +62,11 @@
             </Columns>
 
         </asp:GridView>
-
+        
+            </div>
+</div>
+        
+       
     </div>
     <div class="m-3 mt-5">
         <div class="m-3">
@@ -75,8 +81,9 @@
 
     
     <script>
-       
-
+        function toggle() {
+            $('#exampleModal').modal(options)
+        }
         function fifi() {
 
     var tables, sort, i, x, y, tableSort;
