@@ -33,9 +33,9 @@
       <td><%#Eval(nameof(projectLibrary.Models.Apartman.TotalRooms)) %></td>
       <td><%#Eval(nameof(projectLibrary.Models.Apartman.MaxAdults)) %></td>
       <td>
-         <asp:LinkButton ID="LinkButton1" CommandArgument="<%#Eval(nameof(projectLibrary.Models.Apartman.Id)) %>" OnClick="LinkButton1_Click" runat="server">
-             Edit
-             </asp:LinkButton>
+         <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</a>
            </td>
         
         
