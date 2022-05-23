@@ -25,7 +25,7 @@ namespace projectLibrary.DAL
                 Id = (int)row[nameof(Apartman.Id)],
                 Guid = row[nameof(Apartman.Guid)].ToString(),
                 CreatedAt = (DateTime)row[nameof(Apartman.CreatedAt)],
-                // fali nullable deletedat
+                DeletedAt = row[nameof(Apartman.DeletedAt)] as DateTime?,
                 OwnerId = (int)row[nameof(Apartman.OwnerId)],
                 TypeId = (int)row[nameof(Apartman.TypeId)],
                 StatusId = (int)row[nameof(Apartman.StatusId)],
@@ -72,8 +72,29 @@ namespace projectLibrary.DAL
             return data;
     }
 
+
+
         public IList<Tag> GetTags() {
             var dataSet = SqlHelper.ExecuteDataset(cs, nameof(GetTags)).Tables[0];
+            DataRowCollection rows = dataSet.Rows;
+            IList<Tag> data = new List<Tag>();
+            foreach (DataRow row in rows)
+            {
+                Tag a = new Tag
+                {
+                    Name = row[nameof(Tag.Name)].ToString(),
+                    NoOfApartments = (int)row[nameof(Tag.NoOfApartments)]
+
+                };
+                data.Add(a);
+            }
+            return data;
+
+        }
+
+        public IList<Tag> updateApt()
+        {
+            var dataSet = SqlHelper.ExecuteDataset(cs, nameof(updateApt)).Tables[0];
             DataRowCollection rows = dataSet.Rows;
             IList<Tag> data = new List<Tag>();
             foreach (DataRow row in rows)

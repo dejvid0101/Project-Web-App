@@ -34,7 +34,7 @@
       <td><%#Eval(nameof(projectLibrary.Models.Apartman.MaxAdults)) %></td>
       <td>
          <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
+  Edit
 </a>
            </td>
         
