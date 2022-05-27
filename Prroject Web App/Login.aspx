@@ -4,7 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="Content" runat="server">
         
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-lg-6">
         <asp:Repeater ID="Repeater1" runat="server">
             <HeaderTemplate>
 
@@ -33,9 +33,8 @@
       <td><%#Eval(nameof(projectLibrary.Models.Apartman.TotalRooms)) %></td>
       <td><%#Eval(nameof(projectLibrary.Models.Apartman.MaxAdults)) %></td>
       <td>
-         <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Edit
-</a>
+          <asp:LinkButton OnClick="LinkButton1_Click" CommandArgument="<%#Eval(nameof(projectLibrary.Models.Apartman.Id)) %>" class="btn btn-primary" ID="LinkEditApt" runat="server">Edit</asp:LinkButton>
+         
            </td>
         
         
@@ -54,15 +53,26 @@
         </asp:Repeater>
 
         </div>
-        <div class="col-md-6">
-        <asp:GridView ID="GridView1" AutoGenerateColumns="false" CssClass="tbl" runat="server">
-            <Columns>
-<asp:BoundField HeaderText/>
-
-            </Columns>
-
-        </asp:GridView>
+        <div class="col-lg-6">
+            <fieldset class="border p-4">
+    <legend class="w-auto">Editor</legend>
+        <div class="m-3">
+            <asp:Label ID="Label2" runat="server" Text="Apt ID:"></asp:Label>
+    <asp:TextBox  class="form-control" ID="TextBox1" runat="server"></asp:TextBox>
+            <asp:Label ID="Label3" runat="server" Text="Total rooms:"></asp:Label>
+    <asp:TextBox  class="form-control" ID="TextBox2" runat="server"></asp:TextBox>
+            <asp:Label ID="Label4" runat="server" Text="Adults:"></asp:Label>
+    <asp:TextBox  class="form-control" ID="TextBox3" runat="server"></asp:TextBox>
+            <asp:Label ID="Label5" runat="server" Text="Children:"></asp:Label>
+    <asp:TextBox  class="form-control" ID="TextBox4" runat="server"></asp:TextBox>
+            <asp:Label ID="Label6" runat="server" Text="Beach distance:"></asp:Label>
+    <asp:TextBox  class="form-control" ID="TextBox5" runat="server"></asp:TextBox>
+                
+                <asp:Button OnClick="Button1_Click" CommandArgument="<%#Eval(TextBox1.Text) %>" ID="ButtonUpdate" runat="server" 
+                    CssClass="btn btn-primary mt-3" Text="Update" /></div>
+      </fieldset>
         
+            
             </div>
 </div>
         
@@ -70,14 +80,15 @@
     </div>
     <div class="m-3 mt-5">
         <div class="m-3">
+            
         <p style="font-size:5rem; font-weight:bold">fefe:</p></div>
         <div class="m-3">
+            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
     <asp:TextBox  class="form-control" ID="exampleInputEmail1" runat="server"></asp:TextBox></div>
       </div>
 
-
-
-
+    
+       
 
     
     <script>

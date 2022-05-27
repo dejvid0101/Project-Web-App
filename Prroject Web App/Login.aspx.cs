@@ -20,11 +20,8 @@ namespace Prroject_Web_App
 
 
             var db = (IRepo)Application["database"];
-            projectLibrary.Models.Apartman testApartman = db.Retrieve(3);
 
 
-
-            exampleInputEmail1.Text = testApartman.ToString();
 
             string[] s=new string[2];
             s[0] = "admin";
@@ -46,6 +43,7 @@ namespace Prroject_Web_App
             if (!IsPostBack)
             {
                 LoadTableData();
+                // make table refresh when updated
             }
 
 
@@ -64,7 +62,33 @@ namespace Prroject_Web_App
         {
             LinkButton btn=sender as LinkButton;
             int apartmanID=int.Parse(btn.CommandArgument);
+            var db = (IRepo)Application["database"];
+            test=db.Retrieve(apartmanID);
+            TextBox1.Text = test[0].Id.ToString();
+            TextBox2.Text = test[0].TotalRooms.ToString();
+            TextBox3.Text = test[0].MaxAdults.ToString();
+            TextBox4.Text = test[0].MaxChildren.ToString();
+            TextBox5.Text = test[0].BeachDistance.ToString();
 
+            
+            
+
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            
+            int[] updateArgs=new int[5];
+            updateArgs[0] = int.Parse(TextBox1.Text);
+            updateArgs[1] = int.Parse(TextBox2.Text);
+            updateArgs[2] = int.Parse(TextBox3.Text);
+            updateArgs[3] = int.Parse(TextBox4.Text);
+            updateArgs[4] = int.Parse(TextBox5.Text);
+            var db = (IRepo)Application["database"];
+
+            db.updateApt(updateArgs);                                                                                           
+
+            LoadTableData();
         }
     }
 }

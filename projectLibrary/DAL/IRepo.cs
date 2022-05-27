@@ -11,8 +11,10 @@ namespace projectLibrary.DAL
     {
         IList<Apartman> GetData2();
         IList<Tag> GetTags();
-        
-            Apartman Retrieve(int id);
+
+        void updateApt(int[] args);
+
+        IList<Apartman> Retrieve(int id);
 
         void Save(Apartman a);
     }

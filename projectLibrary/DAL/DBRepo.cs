@@ -16,11 +16,12 @@ namespace projectLibrary.DAL
     {
         public string cs = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
 
-        public Apartman Retrieve(int id)
+        public IList<Apartman> Retrieve(int id)
         {
+            IList<Apartman> apts = new List<Apartman>();
             var dataSet = SqlHelper.ExecuteDataset(cs, nameof(Retrieve), id).Tables[0];
             DataRow row=dataSet.Rows[0];
-            return new Apartman
+            Apartman apt= new Apartman
             {
                 Id = (int)row[nameof(Apartman.Id)],
                 Guid = row[nameof(Apartman.Guid)].ToString(),
@@ -39,6 +40,8 @@ namespace projectLibrary.DAL
                 TotalRooms = (int)row[nameof(Apartman.TotalRooms)],
                 BeachDistance = (int)row[nameof(Apartman.BeachDistance)]
             };
+            apts.Add(apt);
+            return apts;
         }
 
         public IList<Apartman> GetData2()
@@ -92,22 +95,50 @@ namespace projectLibrary.DAL
 
         }
 
-        public IList<Tag> updateApt()
+        public void updateApt(params int[] args)
         {
-            var dataSet = SqlHelper.ExecuteDataset(cs, nameof(updateApt)).Tables[0];
-            DataRowCollection rows = dataSet.Rows;
-            IList<Tag> data = new List<Tag>();
-            foreach (DataRow row in rows)
-            {
-                Tag a = new Tag
-                {
-                    Name = row[nameof(Tag.Name)].ToString(),
-                    NoOfApartments = (int)row[nameof(Tag.NoOfApartments)]
+            //SqlHelper.ExecuteDataset(cs, nameof(updateApt), args);
 
-                };
-                data.Add(a);
+            SqlConnection c = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "UpdateApt";
+            cmd.Parameters.Add("@Id", SqlDbType.Int).Value = args[0];
+
+            cmd.Parameters.Add("@TotalRooms", SqlDbType.Int).Value = args[1];
+
+            cmd.Parameters.Add("@MaxAdults", SqlDbType.Int).Value = args[2];
+
+            cmd.Parameters.Add("@MaxChildren", SqlDbType.Int).Value = args[3];
+            cmd.Parameters.Add("@BeachDistance", SqlDbType.Int).Value = args[4];
+            cmd.Connection=c;
+            try
+
+            {
+
+                c.Open();
+
+                cmd.ExecuteNonQuery();
+
             }
-            return data;
+
+            catch (Exception ex)
+
+            {
+
+                throw ex;
+
+            }
+
+            finally
+
+            {
+
+                c.Close();
+
+                c.Dispose();
+
+            }
 
         }
 
