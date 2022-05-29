@@ -3,12 +3,12 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Content" runat="server">
         
-    <div class="row">
-        <div class="col-lg-6">
+    <div class="row m-3" >
+        <div class="col-lg-6 ">
         <asp:Repeater ID="Repeater1" runat="server">
             <HeaderTemplate>
 
-<table id="table" class="table">
+<table id="tblApt" class="display">
   <thead class="thead-dark"> 
     <tr>
       <th scope="col">Oznaka apartmana</th>
@@ -77,21 +77,95 @@
 </div>
         
        
-    </div>
-    <div class="m-3 mt-5">
+    <div class="m-3 ">
         <div class="m-3">
             
-        <p style="font-size:5rem; font-weight:bold">fefe:</p></div>
-        <div class="m-3">
-            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-    <asp:TextBox  class="form-control" ID="exampleInputEmail1" runat="server"></asp:TextBox></div>
+        <p style="font-size:2rem; font-weight:bold">Edit status:</p></div>
+        
       </div>
 
-    
+    <div class="row m-3">
+       
+        <div class="col-lg-6">
+        <asp:Repeater ID="Repeater2" runat="server">
+            <HeaderTemplate>
+
+<table id="tblStatus" class="display">
+  <thead class="thead-dark"> 
+    <tr>
+      <th scope="col">Oznaka apartmana</th>
+      <th scope="col">Name</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+
+            </HeaderTemplate>
+            <ItemTemplate>
+
+    <tr>
+      <th scope="row"><%#Eval(nameof(projectLibrary.Models.Apartman.Id)) %></th>
+      <td><%#Eval(nameof(projectLibrary.Models.Apartman.Name)) %></td>
+      <td><%#Eval(nameof(projectLibrary.Models.Apartman.HelperStatus)) %></td>
+      <td>
+          <asp:LinkButton OnClick="LinkEditStatus_Click" CommandArgument="<%#Eval(nameof(projectLibrary.Models.Apartman.FrontendHelperNameID)) %>" class="btn btn-primary" ID="LinkEditStatus" runat="server">Edit</asp:LinkButton>
+         
+           </td>
+        
+        
+      
+        
+    </tr>
+
+            </ItemTemplate>
+            <FooterTemplate>
+                </tbody>
+</table>
+</FooterTemplate>
+  
+
+  
+        </asp:Repeater>
+
+        </div>
+        <div class="col-lg-6">
+            <fieldset class="border p-4">
+    <legend class="w-auto">Editor</legend>
+        <div class="m-3">
+            <asp:Label ID="Label7" runat="server" Text="Ime apartmana: "></asp:Label>
+            <asp:Label ID="LabelName" runat="server" Text=""></asp:Label>
+            <br />
+            <asp:Label ID="Label8" runat="server" Text="ID: "></asp:Label>
+            <asp:Label ID="LabelID" runat="server" Text=""></asp:Label>
+
+    <asp:DropDownList class="form-select" ID="ddlStatus" runat="server"> 
+        <asp:ListItem Selected="True" Value="--odaberi status--"> --odaberi status-- </asp:ListItem>
+        <asp:ListItem Selected="False" Value="Zauzeto"> Zauzeto </asp:ListItem>
+        <asp:ListItem Selected="False" Value="Rezervirano"> Rezervirano </asp:ListItem>
+        <asp:ListItem Selected="False" Value="Slobodno"> Slobodno </asp:ListItem>
+        
+    </asp:DropDownList>
+                  </div>
+                <asp:Button OnClick="BtnUpdateStatus_Click" CommandArgument="<%#Eval(TextBox1.Text) %>"
+                    ID="BtnUpdateStatus" runat="server" 
+                    CssClass="btn btn-primary mt-3" Text="Update" /></div>
+      </fieldset>
+            
+            
+          
+
+    </div>
        
 
     
     <script>
+        $(document).ready(function () {
+            console.log("fefe");
+            $('table.display').dataTable({ /* ... */ });
+
+
+        });
+
         function toggle() {
             $('#exampleModal').modal(options)
         }

@@ -19,10 +19,6 @@ namespace Prroject_Web_App
 
 
 
-            var db = (IRepo)Application["database"];
-
-
-
             string[] s=new string[2];
             s[0] = "admin";
             s[1] = "12345678";
@@ -43,10 +39,19 @@ namespace Prroject_Web_App
             if (!IsPostBack)
             {
                 LoadTableData();
-                // make table refresh when updated
+                LoadStatusTableData();
             }
 
 
+        }
+
+        private void LoadStatusTableData()
+        {
+            var db = (IRepo)Application["database"];
+            test = db.getStatus();
+            Repeater2.DataSource = test;
+
+            Repeater2.DataBind();
         }
 
         private void LoadTableData()
@@ -77,7 +82,8 @@ namespace Prroject_Web_App
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            
+            try
+            {
             int[] updateArgs=new int[5];
             updateArgs[0] = int.Parse(TextBox1.Text);
             updateArgs[1] = int.Parse(TextBox2.Text);
@@ -86,9 +92,73 @@ namespace Prroject_Web_App
             updateArgs[4] = int.Parse(TextBox5.Text);
             var db = (IRepo)Application["database"];
 
-            db.updateApt(updateArgs);                                                                                           
+            
+                db.updateApt(updateArgs);
+            }
+            catch (Exception)
+            {
+
+                Label2.Text = "Molimo odaberite apartman";
+                return;
+            }                                                                                          
 
             LoadTableData();
+        }
+
+        protected void Button1_Click1(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void BtnUpdateStatus_Click(object sender, EventArgs e)
+        {
+            string value = ddlStatus.SelectedItem.Value.Trim();
+            int idStatus = 0;
+            if (value == "Zauzeto")
+            {
+                idStatus = 1;
+            }
+            else if (value=="Rezervirano")
+            {
+                idStatus = 2;
+            }
+            else if (value=="Slobodno")
+            {
+                idStatus = 3;
+            }
+
+            if (string.IsNullOrEmpty(LabelID.Text))
+            {
+LabelName.Text = "Molimo odaberite vrijednost";
+                return;
+            }
+                
+            
+
+            var db = (IRepo)Application["database"];
+
+            try
+            {
+                db.updateStatus(int.Parse(LabelID.Text), idStatus);
+            }
+            catch (Exception)
+            {
+
+                LabelName.Text = "Molimo odaberite vrijednost";
+                return;
+            }
+
+            LoadStatusTableData();
+
+        }
+
+        protected void LinkEditStatus_Click(object sender, EventArgs e)
+        {
+            LinkButton btn = sender as LinkButton;
+            string aptID = btn.CommandArgument.ToString();
+            string[] vs = aptID.Split(':');
+            LabelName.Text = vs[0];
+            LabelID.Text = vs[1];
         }
     }
 }

@@ -9,6 +9,8 @@ namespace projectLibrary.DAL
 {
     public interface IRepo
     {
+        void updateStatus(int idApt, int idStatus);
+        IList<Apartman> getStatus();
         IList<Apartman> GetData2();
         IList<Tag> GetTags();
 

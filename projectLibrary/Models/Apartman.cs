@@ -23,6 +23,8 @@ namespace projectLibrary.Models
         public int MaxChildren { get; set; }
         public int TotalRooms { get; set; }
         public int BeachDistance { get; set; }
+        public string HelperStatus { get; set; }
+        public string FrontendHelperNameID { get; set; }
 
         public override string ToString()
         {

@@ -147,5 +147,69 @@ namespace projectLibrary.DAL
         {
             throw new NotImplementedException();
         }
+
+        public IList<Apartman> getStatus()
+        {
+            var dataSet = SqlHelper.ExecuteDataset(cs, nameof(getStatus)).Tables[0];
+            DataRowCollection rows = dataSet.Rows;
+            IList<Apartman> data = new List<Apartman>();
+            foreach (DataRow row in rows)
+            {
+                Apartman a = new Apartman
+                {
+                    Id = (int)row[nameof(Apartman.Id)],
+                    Name = row[nameof(Apartman.Name)].ToString(),
+                    HelperStatus = row[nameof(Apartman.HelperStatus)].ToString()
+                    
+                };
+
+                a.FrontendHelperNameID = a.Name + ":" + a.Id.ToString();
+                
+                data.Add(a);
+            }
+            return data;
+        }
+
+        public void updateStatus(int idApt,int idStatus)
+        {
+            SqlConnection c = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandType = CommandType.StoredProcedure,
+                CommandText = nameof(updateStatus)
+            };
+            cmd.Parameters.Add(nameof(idApt), SqlDbType.Int).Value = idApt;
+
+            cmd.Parameters.Add(nameof(idStatus), SqlDbType.Int).Value = idStatus;
+
+            cmd.Connection = c;
+            try
+
+            {
+
+                c.Open();
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (Exception ex)
+
+            {
+
+                throw ex;
+
+            }
+
+            finally
+
+            {
+
+                c.Close();
+
+                c.Dispose();
+
+            }
+        }
     }
 }
