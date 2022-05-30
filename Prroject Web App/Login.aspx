@@ -34,7 +34,7 @@
       <td><%#Eval(nameof(projectLibrary.Models.Apartman.MaxAdults)) %></td>
       <td>
           <asp:LinkButton OnClick="LinkButton1_Click" CommandArgument="<%#Eval(nameof(projectLibrary.Models.Apartman.Id)) %>" class="btn btn-primary" ID="LinkEditApt" runat="server">Edit</asp:LinkButton>
-         
+          
            </td>
         
         
@@ -69,7 +69,9 @@
     <asp:TextBox  class="form-control" ID="TextBox5" runat="server"></asp:TextBox>
                 
                 <asp:Button OnClick="Button1_Click" CommandArgument="<%#Eval(TextBox1.Text) %>" ID="ButtonUpdate" runat="server" 
-                    CssClass="btn btn-primary mt-3" Text="Update" /></div>
+                    CssClass="btn btn-primary mt-3" Text="Update" />
+            <asp:LinkButton OnClick="LinkButton2_Click" CommandArgument="<%#Eval(TextBox1.Text) %>" class="btn btn-danger mt-3" ID="LinkButton2" runat="server" Text="Delete"></asp:LinkButton></div>
+               
       </fieldset>
         
             

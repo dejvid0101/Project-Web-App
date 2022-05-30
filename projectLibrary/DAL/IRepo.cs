@@ -9,6 +9,7 @@ namespace projectLibrary.DAL
 {
     public interface IRepo
     {
+        void softDeleteApt(int idApt);
         void updateStatus(int idApt, int idStatus);
         IList<Apartman> getStatus();
         IList<Apartman> GetData2();

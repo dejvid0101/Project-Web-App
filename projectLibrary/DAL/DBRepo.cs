@@ -56,7 +56,7 @@ namespace projectLibrary.DAL
                     Id = (int)row[nameof(Apartman.Id)],
                     Guid = row[nameof(Apartman.Guid)].ToString(),
                     CreatedAt = (DateTime)row[nameof(Apartman.CreatedAt)],
-                    // fali nullable deletedat
+                    DeletedAt = row[nameof(Apartman.DeletedAt)] as DateTime?,
                     OwnerId = (int)row[nameof(Apartman.OwnerId)],
                     TypeId = (int)row[nameof(Apartman.TypeId)],
                     StatusId = (int)row[nameof(Apartman.StatusId)],
@@ -70,7 +70,13 @@ namespace projectLibrary.DAL
                     TotalRooms = (int)row[nameof(Apartman.TotalRooms)],
                     BeachDistance = (int)row[nameof(Apartman.BeachDistance)]
                 };
-                data.Add(a);
+                
+                if (a.DeletedAt == null)
+                {
+                    data.Add(a);
+                }
+                
+                
             }
             return data;
     }
@@ -164,6 +170,8 @@ namespace projectLibrary.DAL
                 };
 
                 a.FrontendHelperNameID = a.Name + ":" + a.Id.ToString();
+
+                
                 
                 data.Add(a);
             }
@@ -181,6 +189,46 @@ namespace projectLibrary.DAL
             cmd.Parameters.Add(nameof(idApt), SqlDbType.Int).Value = idApt;
 
             cmd.Parameters.Add(nameof(idStatus), SqlDbType.Int).Value = idStatus;
+
+            cmd.Connection = c;
+            try
+
+            {
+
+                c.Open();
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (Exception ex)
+
+            {
+
+                throw ex;
+
+            }
+
+            finally
+
+            {
+
+                c.Close();
+
+                c.Dispose();
+
+            }
+        }
+
+        public void softDeleteApt(int idApt)
+        {
+            SqlConnection c = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandType = CommandType.StoredProcedure,
+                CommandText = nameof(softDeleteApt)
+            };
+            cmd.Parameters.Add(nameof(idApt), SqlDbType.Int).Value = idApt;
 
             cmd.Connection = c;
             try

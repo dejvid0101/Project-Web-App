@@ -160,5 +160,24 @@ LabelName.Text = "Molimo odaberite vrijednost";
             LabelName.Text = vs[0];
             LabelID.Text = vs[1];
         }
+
+        protected void LinkButton2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                LinkButton btn = sender as LinkButton;
+                int id = int.Parse(TextBox1.Text);
+                var db = (IRepo)Application["database"];
+                db.softDeleteApt(id);
+            }
+            catch (Exception)
+            {
+
+                Label2.Text = "Molimo odaberite apartman";
+                return;
+            }
+
+            LoadTableData();
+        }
     }
 }
