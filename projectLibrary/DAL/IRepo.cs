@@ -14,7 +14,7 @@ namespace projectLibrary.DAL
         IList<Apartman> getStatus();
         IList<Apartman> GetData2();
         IList<Tag> GetTags();
-
+        void addApt(Apartman a);
         void updateApt(int[] args);
 
         IList<Apartman> Retrieve(int id);

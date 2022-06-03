@@ -223,6 +223,8 @@ namespace projectLibrary.DAL
             }
         }
 
+        
+
         public void softDeleteApt(int idApt)
         {
             SqlConnection c = new SqlConnection(cs);
@@ -232,6 +234,58 @@ namespace projectLibrary.DAL
                 CommandText = nameof(softDeleteApt)
             };
             cmd.Parameters.Add(nameof(idApt), SqlDbType.Int).Value = idApt;
+
+            cmd.Connection = c;
+            try
+
+            {
+
+                c.Open();
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (Exception ex)
+
+            {
+
+                throw ex;
+
+            }
+
+            finally
+
+            {
+
+                c.Close();
+
+                c.Dispose();
+
+            }
+        }
+
+        public void addApt(Apartman a)
+        {
+            SqlConnection c = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandType = CommandType.StoredProcedure,
+                CommandText = nameof(addApt)
+            };
+            cmd.Parameters.Add(nameof(a.OwnerId), SqlDbType.Int).Value = a.OwnerId;
+            cmd.Parameters.Add(nameof(a.TypeId), SqlDbType.Int).Value = a.TypeId;
+            cmd.Parameters.Add(nameof(a.StatusId), SqlDbType.Int).Value = a.StatusId;
+            cmd.Parameters.Add(nameof(a.CityId), SqlDbType.Int).Value = a.CityId;
+            cmd.Parameters.Add(nameof(a.Address), SqlDbType.Int).Value = a.Address;
+            cmd.Parameters.Add(nameof(a.Name), SqlDbType.Int).Value = a.Name;
+            cmd.Parameters.Add(nameof(a.NameEng), SqlDbType.Int).Value = a.NameEng;
+            cmd.Parameters.Add(nameof(a.Price), SqlDbType.Int).Value = a.Price;
+            cmd.Parameters.Add(nameof(a.MaxAdults), SqlDbType.Int).Value = a.MaxAdults;
+            cmd.Parameters.Add(nameof(a.MaxChildren), SqlDbType.Int).Value = a.MaxChildren;
+            cmd.Parameters.Add(nameof(a.TotalRooms), SqlDbType.Int).Value = a.TotalRooms;
+            cmd.Parameters.Add(nameof(a.BeachDistance), SqlDbType.Int).Value = a.BeachDistance;
+
 
             cmd.Connection = c;
             try

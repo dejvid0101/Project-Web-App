@@ -39,7 +39,7 @@ namespace Prroject_Web_App
             if (!IsPostBack)
             {
                 LoadTableData();
-                LoadStatusTableData();
+                //LoadStatusTableData();
             }
 
 
@@ -182,6 +182,24 @@ LabelName.Text = "Molimo odaberite vrijednost";
             }
 
             LoadTableData();
+        }
+
+        protected void Button1_Click2(object sender, EventArgs e)
+        {
+            Apartman a = new Apartman
+            {
+                TotalRooms = int.Parse(TextBox2.Text),
+                MaxAdults = int.Parse(TextBox3.Text),
+                MaxChildren = int.Parse(TextBox4.Text),
+                BeachDistance = int.Parse(TextBox5.Text),
+                OwnerId = int.Parse(TextBoxOwner.Text),
+                CityId = int.Parse(TextBoxCity.Text),
+                Address = TextBoxAddress.Text,
+                Name = TextBoxAptName.Text
+            };
+
+            var db = (IRepo)Application["database"];
+            db.addApt(a);
         }
     }
 }

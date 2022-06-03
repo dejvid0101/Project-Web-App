@@ -78,6 +78,7 @@
             <asp:Label ID="LabelAptName" runat="server" Text="Apt name:"></asp:Label>
     <asp:TextBox  class="form-control" ID="TextBoxAptName" runat="server"></asp:TextBox>
                 
+            <asp:Button OnClick="Button1_Click2" ID="Button1" runat="server" Text="Add" CssClass="mt-3  btn btn-warning" />
                 <asp:Button OnClick="Button1_Click" CommandArgument="<%#Eval(TextBox1.Text) %>" ID="ButtonUpdate" runat="server" 
                     CssClass="btn btn-primary mt-3" Text="Update" />
             <asp:LinkButton OnClick="LinkButton2_Click" CommandArgument="<%#Eval(TextBox1.Text) %>" class="btn btn-danger mt-3" ID="LinkButton2" runat="server" Text="Delete"></asp:LinkButton></div>
