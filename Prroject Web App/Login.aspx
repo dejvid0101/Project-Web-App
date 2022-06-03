@@ -57,7 +57,7 @@
             <fieldset class="border p-4">
     <legend class="w-auto">Editor</legend>
         <div class="m-3">
-            <asp:Label ID="Label2" runat="server" Text="Apt ID:"></asp:Label>
+            <asp:Label ID="Label2" runat="server" Text="Apt ID (leave empty if adding):"></asp:Label>
     <asp:TextBox  class="form-control" ID="TextBox1" runat="server"></asp:TextBox>
             <asp:Label ID="Label3" runat="server" Text="Total rooms:"></asp:Label>
     <asp:TextBox  class="form-control" ID="TextBox2" runat="server"></asp:TextBox>
@@ -67,6 +67,16 @@
     <asp:TextBox  class="form-control" ID="TextBox4" runat="server"></asp:TextBox>
             <asp:Label ID="Label6" runat="server" Text="Beach distance:"></asp:Label>
     <asp:TextBox  class="form-control" ID="TextBox5" runat="server"></asp:TextBox>
+            <asp:Label ID="LabelOwner" runat="server" Text="Owner:"></asp:Label>
+   <div class="row"><div class="col-10"><asp:TextBox  class="form-control" ID="TextBoxOwner" runat="server"></asp:TextBox>
+            </div><div class="col-2"><button class="btn btn-primary">Owners</button></div></div>
+            <asp:Label ID="LabelCity" runat="server" Text="City:"></asp:Label>
+    <div class="row"><div class="col-10"><asp:TextBox  class="form-control" ID="TextBoxCity" runat="server"></asp:TextBox>
+           </div><div class="col-2"> <button class="btn btn-primary">City list</button></div></div>
+            <asp:Label ID="LabelAddress" runat="server" Text="Address:"></asp:Label>
+    <asp:TextBox  class="form-control" ID="TextBoxAddress" runat="server"></asp:TextBox>
+            <asp:Label ID="LabelAptName" runat="server" Text="Apt name:"></asp:Label>
+    <asp:TextBox  class="form-control" ID="TextBoxAptName" runat="server"></asp:TextBox>
                 
                 <asp:Button OnClick="Button1_Click" CommandArgument="<%#Eval(TextBox1.Text) %>" ID="ButtonUpdate" runat="server" 
                     CssClass="btn btn-primary mt-3" Text="Update" />

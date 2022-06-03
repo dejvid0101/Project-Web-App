@@ -165,15 +165,18 @@ namespace projectLibrary.DAL
                 {
                     Id = (int)row[nameof(Apartman.Id)],
                     Name = row[nameof(Apartman.Name)].ToString(),
-                    HelperStatus = row[nameof(Apartman.HelperStatus)].ToString()
+                    HelperStatus = row[nameof(Apartman.HelperStatus)].ToString(),
+                    DeletedAt = row[nameof(Apartman.DeletedAt)] as DateTime?
                     
                 };
 
                 a.FrontendHelperNameID = a.Name + ":" + a.Id.ToString();
 
-                
-                
-                data.Add(a);
+                if (a.DeletedAt == null)
+                {
+                    data.Add(a);
+                }
+
             }
             return data;
         }

@@ -74,6 +74,10 @@ namespace Prroject_Web_App
             TextBox3.Text = test[0].MaxAdults.ToString();
             TextBox4.Text = test[0].MaxChildren.ToString();
             TextBox5.Text = test[0].BeachDistance.ToString();
+            TextBoxOwner.Text = test[0].OwnerId.ToString();
+            TextBoxCity.Text=test[0].CityId.ToString();
+            TextBoxAddress.Text = test[0].Address;
+            TextBoxAptName.Text = test[0].Name;
 
             
             
