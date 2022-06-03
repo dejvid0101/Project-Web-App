@@ -275,11 +275,11 @@ namespace projectLibrary.DAL
             };
             cmd.Parameters.Add(nameof(a.OwnerId), SqlDbType.Int).Value = a.OwnerId;
             cmd.Parameters.Add(nameof(a.TypeId), SqlDbType.Int).Value = a.TypeId;
-            cmd.Parameters.Add(nameof(a.StatusId), SqlDbType.Int).Value = a.StatusId;
+            cmd.Parameters.Add(nameof(a.StatusId), SqlDbType.Int).Value = 1;
             cmd.Parameters.Add(nameof(a.CityId), SqlDbType.Int).Value = a.CityId;
-            cmd.Parameters.Add(nameof(a.Address), SqlDbType.Int).Value = a.Address;
-            cmd.Parameters.Add(nameof(a.Name), SqlDbType.Int).Value = a.Name;
-            cmd.Parameters.Add(nameof(a.NameEng), SqlDbType.Int).Value = a.NameEng;
+            cmd.Parameters.Add(nameof(a.Address), SqlDbType.NVarChar).Value = a.Address;
+            cmd.Parameters.Add(nameof(a.Name), SqlDbType.NVarChar).Value = a.Name;
+            cmd.Parameters.Add(nameof(a.NameEng), SqlDbType.NVarChar).Value = "x";
             cmd.Parameters.Add(nameof(a.Price), SqlDbType.Int).Value = a.Price;
             cmd.Parameters.Add(nameof(a.MaxAdults), SqlDbType.Int).Value = a.MaxAdults;
             cmd.Parameters.Add(nameof(a.MaxChildren), SqlDbType.Int).Value = a.MaxChildren;
