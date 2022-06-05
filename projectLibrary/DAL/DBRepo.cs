@@ -280,7 +280,7 @@ namespace projectLibrary.DAL
             cmd.Parameters.Add(nameof(a.Address), SqlDbType.NVarChar).Value = a.Address;
             cmd.Parameters.Add(nameof(a.Name), SqlDbType.NVarChar).Value = a.Name;
             cmd.Parameters.Add(nameof(a.NameEng), SqlDbType.NVarChar).Value = "x";
-            cmd.Parameters.Add(nameof(a.Price), SqlDbType.Int).Value = a.Price;
+            cmd.Parameters.Add(nameof(a.Price), SqlDbType.Float).Value = 110.00;
             cmd.Parameters.Add(nameof(a.MaxAdults), SqlDbType.Int).Value = a.MaxAdults;
             cmd.Parameters.Add(nameof(a.MaxChildren), SqlDbType.Int).Value = a.MaxChildren;
             cmd.Parameters.Add(nameof(a.TotalRooms), SqlDbType.Int).Value = a.TotalRooms;
@@ -315,6 +315,153 @@ namespace projectLibrary.DAL
                 c.Dispose();
 
             }
+        }
+
+        public IList<Generic> getOwners()
+        {
+            var dataSet = SqlHelper.ExecuteDataset(cs, nameof(getOwners)).Tables[0];
+            DataRowCollection rows = dataSet.Rows;
+            IList<Generic> data = new List<Generic>();
+            foreach (DataRow row in rows)
+            {
+                Generic o = new Generic
+                {
+                    Id = (int)row[nameof(Generic.Id)],
+                    Name = row[nameof(Generic.Name)].ToString(),
+                   
+                };
+data.Add(o);
+            }
+            
+
+            return data;
+        }
+
+        public IList<Generic> GetCities()
+        {
+            var dataSet = SqlHelper.ExecuteDataset(cs, nameof(GetCities)).Tables[0];
+            DataRowCollection rows = dataSet.Rows;
+            IList<Generic> data = new List<Generic>();
+            foreach (DataRow row in rows)
+            {
+                Generic o = new Generic
+                {
+                    Id = (int)row[nameof(Generic.Id)],
+                    Name = row[nameof(Generic.Name)].ToString(),
+
+                };
+                data.Add(o);
+            }
+
+
+            return data;
+        }
+
+        public void DeleteTag(string tg)
+        {
+            Tag t = new Tag
+            {
+                Name = tg
+            };
+
+            SqlConnection c = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandType = CommandType.StoredProcedure,
+                CommandText = nameof(DeleteTag)
+            };
+            cmd.Parameters.Add(nameof(t.Name), SqlDbType.NVarChar).Value = tg;
+
+            cmd.Connection = c;
+            try
+
+            {
+
+                c.Open();
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (Exception ex)
+
+            {
+
+                return;
+
+            }
+
+            finally
+
+            {
+
+                c.Close();
+
+                c.Dispose();
+
+            }
+        }
+
+        public void AddTag(Generic tg)
+        {
+
+            SqlConnection c = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandType = CommandType.StoredProcedure,
+                CommandText = nameof(AddTag)
+            };
+            cmd.Parameters.Add(nameof(tg.Name), SqlDbType.NVarChar).Value = tg.Name;
+            cmd.Parameters.Add("TypeID", SqlDbType.Int).Value = tg.Id;
+
+            cmd.Connection = c;
+            try
+
+            {
+
+                c.Open();
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (Exception)
+
+            {
+
+                return;
+
+            }
+
+            finally
+
+            {
+
+                c.Close();
+
+                c.Dispose();
+
+            }
+        }
+
+        public IList<Generic> GetTagType()
+        {
+            var dataSet = SqlHelper.ExecuteDataset(cs, nameof(GetTagType)).Tables[0];
+            DataRowCollection rows = dataSet.Rows;
+            IList<Generic> data = new List<Generic>();
+            foreach (DataRow row in rows)
+            {
+                Generic o = new Generic
+                {
+                    Id = (int)row[nameof(Generic.Id)],
+                    Name = row[nameof(Generic.Name)].ToString(),
+
+                };
+                data.Add(o);
+            }
+
+
+            return data;
         }
     }
 }

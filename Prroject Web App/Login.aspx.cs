@@ -17,7 +17,11 @@ namespace Prroject_Web_App
         protected void Page_Load(object sender, EventArgs e)
         {
 
-
+            if (!IsPostBack)
+            {
+                this.LinkButton2.Attributes.Add("onclick",
+                    "return DialogTest.doConfirm(this, 'Are you sure you want to delete?', 'Confirm Delete');");
+            }
 
             string[] s=new string[2];
             s[0] = "admin";
@@ -39,7 +43,7 @@ namespace Prroject_Web_App
             if (!IsPostBack)
             {
                 LoadTableData();
-                //LoadStatusTableData();
+                LoadStatusTableData();
             }
 
 
@@ -186,20 +190,41 @@ LabelName.Text = "Molimo odaberite vrijednost";
 
         protected void Button1_Click2(object sender, EventArgs e)
         {
-            Apartman a = new Apartman
+            try
             {
-                TotalRooms = int.Parse(TextBox2.Text),
-                MaxAdults = int.Parse(TextBox3.Text),
-                MaxChildren = int.Parse(TextBox4.Text),
-                BeachDistance = int.Parse(TextBox5.Text),
-                OwnerId = int.Parse(TextBoxOwner.Text),
-                CityId = int.Parse(TextBoxCity.Text),
-                Address = TextBoxAddress.Text,
-                Name = TextBoxAptName.Text
-            };
-
-            var db = (IRepo)Application["database"];
+                Apartman a = new Apartman
+                {
+                    TotalRooms = int.Parse(TextBox2.Text),
+                    MaxAdults = int.Parse(TextBox3.Text),
+                    MaxChildren = int.Parse(TextBox4.Text),
+                    BeachDistance = int.Parse(TextBox5.Text),
+                    OwnerId = int.Parse(TextBoxOwner.Text),
+                    CityId = int.Parse(TextBoxCity.Text),
+                    Address = TextBoxAddress.Text,
+                    Name = TextBoxAptName.Text
+                };
+                
+                var db = (IRepo)Application["database"];
             db.addApt(a);
+            }
+            catch (Exception)
+            {
+
+                return;  
+            }
+
+            
+            LoadTableData();
+        }
+
+        protected void BtnOwner_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Owners.aspx");
+        }
+
+        protected void btnCity_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("CityList.aspx");
         }
     }
 }

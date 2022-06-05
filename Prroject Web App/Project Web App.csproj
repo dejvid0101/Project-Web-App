@@ -72,6 +72,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_LocalResources\Settings.aspx.hr.resx" />
+    <Content Include="CityList.aspx" />
+    <Content Include="Owners.aspx" />
     <EmbeddedResource Include="App_LocalResources\Settings.aspx.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Settings.aspx.Designer.cs</LastGenOutput>
@@ -120,6 +122,13 @@
       <DependentUpon>Settings.aspx.resx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="CityList.aspx.cs">
+      <DependentUpon>CityList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CityList.aspx.designer.cs">
+      <DependentUpon>CityList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -175,6 +184,13 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Owners.aspx.cs">
+      <DependentUpon>Owners.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Owners.aspx.designer.cs">
+      <DependentUpon>Owners.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
