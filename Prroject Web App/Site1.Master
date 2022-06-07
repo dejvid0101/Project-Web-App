@@ -39,7 +39,10 @@
           <a class='nav-link' aria-current='page' href='/'>Apartments</a>
         </li>
         <li class='nav-item'>
-          <a class='nav-link' onclick="fifi()" href='Tags.aspx'>Tags</a>
+          <a class='nav-link' href='Tags.aspx'>Tags</a>
+        </li>
+          <li class='nav-item'>
+          <a class='nav-link' href='Images.aspx'>Images</a>
         </li>
           <% } %>
       </ul>

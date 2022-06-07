@@ -17,11 +17,7 @@ namespace Prroject_Web_App
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if (!IsPostBack)
-            {
-                this.LinkButton2.Attributes.Add("onclick",
-                    "return DialogTest.doConfirm(this, 'Are you sure you want to delete?', 'Confirm Delete');");
-            }
+            
 
             string[] s=new string[2];
             s[0] = "admin";
@@ -44,6 +40,20 @@ namespace Prroject_Web_App
             {
                 LoadTableData();
                 LoadStatusTableData();
+            }
+
+            if (IsPostBack)
+            {
+                TextBox1.Text = null;
+                TextBox2.Text = null;
+                TextBox3.Text = null;
+                TextBox4.Text = null;
+                TextBox5.Text = null;
+                TextBoxAddress.Text = null;
+                TextBoxAptName.Text = null;
+                TextBoxCity.Text = null;
+                TextBoxOwner.Text = null;
+                // set postback values to null
             }
 
 

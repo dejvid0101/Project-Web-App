@@ -73,6 +73,7 @@
   <ItemGroup>
     <Content Include="App_LocalResources\Settings.aspx.hr.resx" />
     <Content Include="CityList.aspx" />
+    <Content Include="Images.aspx" />
     <Content Include="Owners.aspx" />
     <EmbeddedResource Include="App_LocalResources\Settings.aspx.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -141,6 +142,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Images.aspx.cs">
+      <DependentUpon>Images.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Images.aspx.designer.cs">
+      <DependentUpon>Images.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

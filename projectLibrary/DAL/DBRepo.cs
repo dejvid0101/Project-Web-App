@@ -280,6 +280,7 @@ namespace projectLibrary.DAL
             cmd.Parameters.Add(nameof(a.Address), SqlDbType.NVarChar).Value = a.Address;
             cmd.Parameters.Add(nameof(a.Name), SqlDbType.NVarChar).Value = a.Name;
             cmd.Parameters.Add(nameof(a.NameEng), SqlDbType.NVarChar).Value = "x";
+            // price
             cmd.Parameters.Add(nameof(a.Price), SqlDbType.Float).Value = 110.00;
             cmd.Parameters.Add(nameof(a.MaxAdults), SqlDbType.Int).Value = a.MaxAdults;
             cmd.Parameters.Add(nameof(a.MaxChildren), SqlDbType.Int).Value = a.MaxChildren;
@@ -457,6 +458,27 @@ data.Add(o);
                     Name = row[nameof(Generic.Name)].ToString(),
 
                 };
+                data.Add(o);
+            }
+
+
+            return data;
+        }
+
+        public IList<Generic> GetImages(int ApartmentId)
+        {
+            var dataSet = SqlHelper.ExecuteDataset(cs, nameof(GetImages), ApartmentId).Tables[0];
+            DataRowCollection rows = dataSet.Rows;
+            IList<Generic> data = new List<Generic>();
+            foreach (DataRow row in rows)
+            {
+                Generic o = new Generic
+                {
+                    Id = (int)row["ApartmentId"],
+                    Name = row["Path"].ToString()
+
+                };
+                //čitanje putanja slika iz baze za odabrani apartman
                 data.Add(o);
             }
 
