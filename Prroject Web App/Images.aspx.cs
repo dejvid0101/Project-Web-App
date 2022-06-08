@@ -2,6 +2,7 @@
 using projectLibrary.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -64,7 +65,7 @@ namespace Prroject_Web_App
         {
             // Specify the path on the server to
             // save the uploaded file to.
-            string Path = @"C:\Users\David\OneDrive - Visoko uciliste Algebra\Desktop\Project Web App\projectLibrary\Images\";
+            string Path =new FileInfo(AppDomain.CurrentDomain.BaseDirectory).Directory.Parent.FullName;
 
             // Before attempting to perform operations
             // on the file, verify that the FileUpload 
@@ -76,7 +77,7 @@ namespace Prroject_Web_App
 
                 // Append the name of the file to upload to the path.
 
-                string savePath =  Path + fileName;
+                string savePath =  Path +@"\projectLibrary\Images\"+ fileName;
 
 
                 // Call the SaveAs method to save the 
@@ -106,9 +107,7 @@ namespace Prroject_Web_App
             int apartmanID = int.Parse(btn.CommandArgument);
             LoadImgTableData(apartmanID);
             
-
-
-
+            LabelAptName.Text= "Apt ID:"+apartmanID.ToString();
 
         }
     }
