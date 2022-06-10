@@ -75,6 +75,8 @@
     <Content Include="CityList.aspx" />
     <Content Include="Images.aspx" />
     <Content Include="Owners.aspx" />
+    <Content Include="zz\kad su na istoj razini.png" />
+    <Content Include="zz\using.png" />
     <EmbeddedResource Include="App_LocalResources\Settings.aspx.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Settings.aspx.Designer.cs</LastGenOutput>
@@ -242,6 +244,7 @@
       <Name>projectLibrary</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

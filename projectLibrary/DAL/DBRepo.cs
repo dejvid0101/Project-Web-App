@@ -465,6 +465,48 @@ data.Add(o);
             return data;
         }
 
+        public void AppendImg(string imgPath,int aptID)
+        {
+            SqlConnection c = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandType = CommandType.StoredProcedure,
+                CommandText = nameof(AppendImg)
+            };
+            cmd.Parameters.Add(nameof(imgPath), SqlDbType.NVarChar).Value = imgPath;
+            cmd.Parameters.Add(nameof(aptID), SqlDbType.Int).Value = aptID;
+
+            cmd.Connection = c;
+            try
+
+            {
+
+                c.Open();
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (Exception)
+
+            {
+
+                return;
+
+            }
+
+            finally
+
+            {
+
+                c.Close();
+
+                c.Dispose();
+
+            }
+
+        }
+
         public IList<Generic> GetImages(int ApartmentId)
         {
             var dataSet = SqlHelper.ExecuteDataset(cs, nameof(GetImages), ApartmentId).Tables[0];

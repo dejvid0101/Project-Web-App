@@ -15,6 +15,7 @@ namespace Prroject_Web_App
         private IList<Apartman> test;
         private IList<Generic> imgs;
 
+        
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -63,21 +64,18 @@ namespace Prroject_Web_App
 
         protected void UploadButton_Click(object sender, EventArgs e)
         {
-            // Specify the path on the server to
-            // save the uploaded file to.
-            string Path =new FileInfo(AppDomain.CurrentDomain.BaseDirectory).Directory.Parent.FullName;
-
             // Before attempting to perform operations
             // on the file, verify that the FileUpload 
             // control contains a file.
             if (FileUpload1.HasFile)
             {
-                // Get the name of the file to upload.
+                string Path = new FileInfo(AppDomain.CurrentDomain.BaseDirectory).Directory.Parent.FullName;
+                
                 string fileName = FileUpload1.FileName;
 
                 // Append the name of the file to upload to the path.
 
-                string savePath =  Path +@"\projectLibrary\Images\"+ fileName;
+                string savePath =  Path +@"\Prroject Web App\zz\"+ fileName;
 
 
                 // Call the SaveAs method to save the 
@@ -92,6 +90,7 @@ namespace Prroject_Web_App
                 // Notify the user of the name of the file
                 // was saved under.
                 UploadStatusLabel.Text = "Your file was saved as " + fileName;
+                LabelAptFileName.Text = fileName;
             }
             else
             {
@@ -108,7 +107,34 @@ namespace Prroject_Web_App
             LoadImgTableData(apartmanID);
             
             LabelAptName.Text= "Apt ID:"+apartmanID.ToString();
+            LabelAptId.Text= apartmanID.ToString();
 
+            LinkAppendImg.Text = "Append file to " + LabelAptName.Text;
+            LinkAppendImg.Visible = true;
+
+        }
+
+        protected void LinkAppendImg_Click(object sender, EventArgs e)
+        {
+            if (!FileUpload1.HasFile&&(LabelAptFileName.Text == null || LabelAptFileName.Text == ""))
+            {
+                LabelAptName.ForeColor = System.Drawing.Color.Red;
+                LabelAptName.Text = "You didn't choose a file.";
+                return;
+            }
+if (LabelAptFileName.Text==null||LabelAptFileName.Text=="")
+            {
+                LabelAptName.Text = "You didn't upload a file.";
+                return ;
+            }
+            int aptID = int.Parse(LabelAptId.Text);
+
+            var db = (DBRepo)Application["database"];
+            
+
+            
+            db.AppendImg($@"zz\{LabelAptFileName.Text}", aptID);
+            LoadImgTableData(aptID);
         }
     }
 }

@@ -51,9 +51,11 @@
             </asp:Repeater>
 
              <fieldset class="border p-4">
-                <legend class="w-auto">Add image</legend>
+                <legend class="w-auto">Add an image</legend>
                  <br />
                  <asp:Label ID="LabelAptName" runat="server" Text=""></asp:Label>
+                 <asp:Label ID="LabelAptId" runat="server" visible="false" Text=""></asp:Label>
+                 <asp:Label ID="LabelAptFileName" runat="server" visible="false" Text=""></asp:Label>
                  <br />
                  <asp:FileUpload id="FileUpload1"                 
            runat="server">
@@ -65,7 +67,9 @@
            runat="server">
        </asp:Button> 
                  <br />
-                 <asp:Label ID="UploadStatusLabel" runat="server" Text="ff"></asp:Label>
+                 <asp:Label ID="UploadStatusLabel" runat="server" Text=""></asp:Label>
+                 <br />
+                 <asp:LinkButton OnClick="LinkAppendImg_Click" class="btn btn-primary" ID="LinkAppendImg" runat="server" visible="false"></asp:LinkButton>
                  </fieldset>
 
         </div>
@@ -78,17 +82,21 @@
                     <table id="tblApt" class="displ">
                         <thead class="thead-dark">
                             <tr>
-                                <th scope="col">Images</th>
+                                <th scope="col">Apt ID</th>
+                                <th scope="col">Image</th>
                             </tr>
                         </thead>
                         <tbody>
                 </HeaderTemplate>
                 <ItemTemplate>
 
+                   
+
                     <tr>
                         <th scope="row"><%#Eval(nameof(projectLibrary.Models.Apartman.Id)) %></th>
                         <td>
-                            <%#Eval(nameof(projectLibrary.Models.Generic.Name)) %>
+                            <asp:Image ID="Image1" Width="200" ImageUrl="<%#Eval(nameof(projectLibrary.Models.Generic.Name)) %>"  runat="server" />
+                            
                             <asp:LinkButton OnClick="LinkButton1_Click" CommandArgument="<%#Eval(nameof(projectLibrary.Models.Apartman.Id)) %>"
                                 class="btn btn-primary" ID="LinkEditApt" runat="server">Edit</asp:LinkButton>
                         </td>
