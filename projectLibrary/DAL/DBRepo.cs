@@ -465,6 +465,48 @@ data.Add(o);
             return data;
         }
 
+        public void DeleteImg(string img)
+        {
+            SqlConnection c = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandType = CommandType.StoredProcedure,
+                CommandText = nameof(DeleteImg)
+            };
+            cmd.Parameters.Add(nameof(img), SqlDbType.NVarChar).Value = img;
+
+            cmd.Connection = c;
+            try
+
+            {
+
+                c.Open();
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (Exception)
+
+            {
+
+                return;
+
+            }
+
+            finally
+
+            {
+
+                c.Close();
+
+                c.Dispose();
+
+            }
+
+
+        }
+
         public void AppendImg(string imgPath,int aptID)
         {
             SqlConnection c = new SqlConnection(cs);

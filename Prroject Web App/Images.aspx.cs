@@ -12,6 +12,7 @@ namespace Prroject_Web_App
 {
     public partial class Images : System.Web.UI.Page
     {
+        string Path = new FileInfo(AppDomain.CurrentDomain.BaseDirectory).Directory.Parent.FullName;
         private IList<Apartman> test;
         private IList<Generic> imgs;
 
@@ -69,23 +70,22 @@ namespace Prroject_Web_App
             // control contains a file.
             if (FileUpload1.HasFile)
             {
-                string Path = new FileInfo(AppDomain.CurrentDomain.BaseDirectory).Directory.Parent.FullName;
+                
                 
                 string fileName = FileUpload1.FileName;
 
                 // Append the name of the file to upload to the path.
 
-                string savePath =  Path +@"\Prroject Web App\zz\"+ fileName;
+                string savePath =  Path + @"\Prroject Web App\zz\" + fileName;
+                string saveClientPath = Path +@"\Client Side\zz\"+ fileName;
 
 
-                // Call the SaveAs method to save the 
-                // uploaded file to the specified path.
-                // This example does not perform all
-                // the necessary error checking.               
-                // If a file with the same name
-                // already exists in the specified path,  
-                // the uploaded file overwrites it.
+                
+                // make files save to Image folders in both parts of the application by altering savePath
+
+
                 FileUpload1.SaveAs(savePath);
+                FileUpload1.SaveAs(saveClientPath);
 
                 // Notify the user of the name of the file
                 // was saved under.
@@ -116,24 +116,40 @@ namespace Prroject_Web_App
 
         protected void LinkAppendImg_Click(object sender, EventArgs e)
         {
+            // if file not chosen
             if (!FileUpload1.HasFile&&(LabelAptFileName.Text == null || LabelAptFileName.Text == ""))
             {
                 LabelAptName.ForeColor = System.Drawing.Color.Red;
                 LabelAptName.Text = "You didn't choose a file.";
                 return;
             }
+            // if file not uploaded
 if (LabelAptFileName.Text==null||LabelAptFileName.Text=="")
             {
                 LabelAptName.Text = "You didn't upload a file.";
                 return ;
             }
+
+            // get estate to append to
             int aptID = int.Parse(LabelAptId.Text);
 
             var db = (DBRepo)Application["database"];
             
-
             
             db.AppendImg($@"zz\{LabelAptFileName.Text}", aptID);
+            LoadImgTableData(aptID);
+        }
+
+        protected void LinkDeleteImg_Click(object sender, EventArgs e)
+        {
+            LinkButton btn = sender as LinkButton;
+            string img = btn.CommandArgument.ToString();
+
+            var db = (DBRepo)Application["database"];
+
+            int aptID = int.Parse(LabelAptId.Text);
+
+            db.DeleteImg(img);
             LoadImgTableData(aptID);
         }
     }

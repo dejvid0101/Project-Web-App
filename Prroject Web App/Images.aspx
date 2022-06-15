@@ -97,8 +97,8 @@
                         <td>
                             <asp:Image ID="Image1" Width="200" ImageUrl="<%#Eval(nameof(projectLibrary.Models.Generic.Name)) %>"  runat="server" />
                             
-                            <asp:LinkButton OnClick="LinkButton1_Click" CommandArgument="<%#Eval(nameof(projectLibrary.Models.Apartman.Id)) %>"
-                                class="btn btn-primary" ID="LinkEditApt" runat="server">Edit</asp:LinkButton>
+                            <asp:LinkButton OnClick="LinkDeleteImg_Click" OnClientClick="return confirm('Jeste li sigurni?');" CommandArgument="<%#Eval(nameof(projectLibrary.Models.Generic.Name))%>"
+                                class="btn btn-danger" ID="LinkDeleteImg" runat="server">Delete</asp:LinkButton>
                         </td>
                             
 
