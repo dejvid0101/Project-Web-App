@@ -11,7 +11,10 @@ namespace Prroject_Web_App
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Application["login"] != null)
+            {
+                Response.Redirect("Login.aspx");
+            }
         }
 
         protected void Button1_Click(object sender, EventArgs e)
