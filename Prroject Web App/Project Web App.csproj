@@ -89,14 +89,6 @@
   <ItemGroup>
     <Content Include="App_LocalResources\Settings.aspx.hr.resx" />
     <Content Include="CityList.aspx" />
-    <Content Include="Images.aspx" />
-    <Content Include="Owners.aspx" />
-    <EmbeddedResource Include="App_LocalResources\Settings.aspx.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Settings.aspx.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <Content Include="App_Themes\DarkTheme\Dark.css" />
-    <Content Include="App_Themes\WhiteTheme\White.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -113,6 +105,14 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Images.aspx" />
+    <Content Include="Owners.aspx" />
+    <EmbeddedResource Include="App_LocalResources\Settings.aspx.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Settings.aspx.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Content Include="App_Themes\DarkTheme\Dark.css" />
+    <Content Include="App_Themes\WhiteTheme\White.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
@@ -202,13 +202,6 @@
     <Compile Include="Tags.aspx.designer.cs">
       <DependentUpon>Tags.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ViewSwitcher.ascx.cs">
-      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ViewSwitcher.ascx.designer.cs">
-      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Owners.aspx.cs">
       <DependentUpon>Owners.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -216,8 +209,16 @@
     <Compile Include="Owners.aspx.designer.cs">
       <DependentUpon>Owners.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ViewSwitcher.ascx.cs">
+      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewSwitcher.ascx.designer.cs">
+      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Site1.Master" />
     <Content Include="Content\bootstrap.rtl.min.css.map" />
     <Content Include="Content\bootstrap.rtl.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
@@ -235,8 +236,6 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <None Include="packages.config" />
-    <Content Include="Site.Mobile.Master" />
-    <Content Include="Site1.Master" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.esm.min.js.map" />
@@ -245,6 +244,7 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.6.0.min.map" />
+    <Content Include="Site.Mobile.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
