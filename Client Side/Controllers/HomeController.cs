@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using projectLibrary.DAL;
+
 
 namespace Client_Side.Controllers
 {
@@ -10,7 +12,9 @@ namespace Client_Side.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            IRepo database=new DBRepo();
+            IList<projectLibrary.Models.Apartman> apts = database.GetData2();
+            return View(apts);
         }
 
         public ActionResult About()
