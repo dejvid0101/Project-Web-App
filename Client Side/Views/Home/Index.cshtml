@@ -1,34 +1,55 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    @model IList<projectLibrary.Models.Apartman>
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<div class="container" style="margin-top:70px">
+    <div class="jumbotron">
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+            <div class="row">
+                <label style="width:110px">Broj soba:</label>
+                @Html.TextBoxFor(m => m[0].TotalRooms, new { @style = "width:50px" })
+            </div>
+            <div class="row">
+                <label style="width:110px">Odraslih:</label>
+                @Html.TextBoxFor(m => m[0].MaxAdults, new { @style = "width:50px" })
+            </div>
+            <div class="row">
+                <label style="width:110px">Djece:</label>
+                @Html.TextBoxFor(m => m[0].MaxChildren, new { @style = "width:50px" })
+            </div>
+            <div class="row">
+                <input type="submit" style="width:164px; height:30px" class="btn btn-primary">
+            </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        }
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+            <div class="row ">
+                @foreach (var item in Model)
+                {
 
-    <h1>Ovdje</h1>
 
-</div>
+                    <div class="col-md-2">
+                        <div class="box-shadow panel panel-default mb-5" style="width: 18rem;">
+                            <div class="panel-body">
+                                <a style="text-decoration:none" asp-action="Details" asp-controller="Books" asp-route-id="@item.Id">
+                                    <div style="overflow:hidden; height:fit-content">
+                                        <img class="panel-img-top" style=" transition: all .2s ease-in-out; height:250px;" src="https://i.stack.imgur.com/WU7o2.jpg">
+                                    </div>
+                                    <div class="panel-body">
+                                        <h5 class=" text-secondary panel-title">@item.Name</h5>
+                                        <p class="text-secondary panel-text">@item.TotalRooms</p>
+                                        <p class="panel-text btn btn-warning">HRK @item.Price/dan</p>
+
+
+
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>

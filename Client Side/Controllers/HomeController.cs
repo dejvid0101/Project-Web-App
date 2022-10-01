@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using projectLibrary.DAL;
-
+using projectLibrary.Models;
 
 namespace Client_Side.Controllers
 {
@@ -15,6 +15,16 @@ namespace Client_Side.Controllers
             IRepo database=new DBRepo();
             IList<projectLibrary.Models.Apartman> apts = database.GetData2();
             return View(apts);
+        }
+
+        [HttpPost]
+        // retrieve apts with attributes from db
+        public ActionResult Index(IList<projectLibrary.Models.Apartman> um)
+        {
+            IList<projectLibrary.Models.Apartman> newlist=new List<projectLibrary.Models.Apartman>();
+            IRepo db=new DBRepo();
+            newlist=db.IndexFilter(um);
+            return View(newlist);
         }
 
         public ActionResult About()

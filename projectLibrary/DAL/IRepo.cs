@@ -9,6 +9,7 @@ namespace projectLibrary.DAL
 {
     public interface IRepo
     {
+        IList<Apartman> IndexFilter(IList<Apartman> a);
         IList<Generic> GetImages(int ApartmentId);
         IList<Generic> GetTagType();
         void AddTag(Generic tg);

@@ -16,6 +16,50 @@ namespace projectLibrary.DAL
     {
         public string cs = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
 
+        public IList<Apartman> IndexFilter(IList<Apartman> a)
+        {
+            IList<Apartman> apts = new List<Apartman>();
+
+            int[] updateArgs = new int[3];
+            updateArgs[0] = a[0].TotalRooms;
+            updateArgs[1] = a[0].MaxAdults;
+            updateArgs[2] = a[0].MaxChildren;
+
+            DbParameter[] paramz= new DbParameter[updateArgs.Length];
+            paramz[0] = new SqlParameter("TotalRooms",updateArgs[0]);
+            paramz[1] = new SqlParameter("MaxAdults",updateArgs[1]);
+            paramz[2] = new SqlParameter("MaxChildren",updateArgs[2]);
+
+            var dataSet = SqlHelper.ExecuteDataset(cs, "IndexFilter", paramz).Tables[0];
+            DataRowCollection rows = dataSet.Rows;
+            foreach (DataRow row in rows)
+            {
+                Apartman apt = new Apartman
+            {
+                Id = (int)row[nameof(Apartman.Id)],
+                Guid = row[nameof(Apartman.Guid)].ToString(),
+                CreatedAt = (DateTime)row[nameof(Apartman.CreatedAt)],
+                DeletedAt = row[nameof(Apartman.DeletedAt)] as DateTime?,
+                OwnerId = (int)row[nameof(Apartman.OwnerId)],
+                TypeId = (int)row[nameof(Apartman.TypeId)],
+                StatusId = (int)row[nameof(Apartman.StatusId)],
+                CityId = (int)row[nameof(Apartman.CityId)],
+                Name = row[nameof(Apartman.Name)].ToString(),
+                NameEng = row[nameof(Apartman.NameEng)].ToString(),
+                Address = row[nameof(Apartman.Address)].ToString(),
+                Price = double.Parse(row[nameof(Apartman.Price)].ToString()),
+                MaxAdults = (int)row[nameof(Apartman.MaxAdults)],
+                MaxChildren = (int)row[nameof(Apartman.MaxChildren)],
+                TotalRooms = (int)row[nameof(Apartman.TotalRooms)],
+                BeachDistance = (int)row[nameof(Apartman.BeachDistance)]
+            };
+            apts.Add(apt);
+            }
+
+            
+            return apts;
+        }
+
         public IList<Apartman> Retrieve(int id)
         {
             IList<Apartman> apts = new List<Apartman>();
