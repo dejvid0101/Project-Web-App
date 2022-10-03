@@ -35,23 +35,25 @@ namespace projectLibrary.DAL
             foreach (DataRow row in rows)
             {
                 Apartman apt = new Apartman
-            {
-                Id = (int)row[nameof(Apartman.Id)],
-                Guid = row[nameof(Apartman.Guid)].ToString(),
-                CreatedAt = (DateTime)row[nameof(Apartman.CreatedAt)],
-                DeletedAt = row[nameof(Apartman.DeletedAt)] as DateTime?,
-                OwnerId = (int)row[nameof(Apartman.OwnerId)],
-                TypeId = (int)row[nameof(Apartman.TypeId)],
-                StatusId = (int)row[nameof(Apartman.StatusId)],
-                CityId = (int)row[nameof(Apartman.CityId)],
-                Name = row[nameof(Apartman.Name)].ToString(),
-                NameEng = row[nameof(Apartman.NameEng)].ToString(),
-                Address = row[nameof(Apartman.Address)].ToString(),
-                Price = double.Parse(row[nameof(Apartman.Price)].ToString()),
-                MaxAdults = (int)row[nameof(Apartman.MaxAdults)],
-                MaxChildren = (int)row[nameof(Apartman.MaxChildren)],
-                TotalRooms = (int)row[nameof(Apartman.TotalRooms)],
-                BeachDistance = (int)row[nameof(Apartman.BeachDistance)]
+                {
+                    Id = (int)row[nameof(Apartman.Id)],
+                    Guid = row[nameof(Apartman.Guid)].ToString(),
+                    CreatedAt = (DateTime)row[nameof(Apartman.CreatedAt)],
+                    DeletedAt = row[nameof(Apartman.DeletedAt)] as DateTime?,
+                    OwnerId = (int)row[nameof(Apartman.OwnerId)],
+                    TypeId = (int)row[nameof(Apartman.TypeId)],
+                    StatusId = (int)row[nameof(Apartman.StatusId)],
+                    CityId = (int)row[nameof(Apartman.CityId)],
+                    Name = row[nameof(Apartman.Name)].ToString(),
+                    NameEng = row[nameof(Apartman.NameEng)].ToString(),
+                    Address = row[nameof(Apartman.Address)].ToString(),
+                    Price = double.Parse(row[nameof(Apartman.Price)].ToString()),
+                    MaxAdults = (int)row[nameof(Apartman.MaxAdults)],
+                    MaxChildren = (int)row[nameof(Apartman.MaxChildren)],
+                    TotalRooms = (int)row[nameof(Apartman.TotalRooms)],
+                    BeachDistance = (int)row[nameof(Apartman.BeachDistance)]
+                    
+                
             };
             apts.Add(apt);
             }

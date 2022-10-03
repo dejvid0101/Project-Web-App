@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Client_Side.Models
 {
+
+    
+
     public class ExternalLoginConfirmationViewModel
     {
         [Required]

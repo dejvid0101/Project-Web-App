@@ -3,53 +3,88 @@
     @model IList<projectLibrary.Models.Apartman>
 }
 
-<div class="container" style="margin-top:70px">
-    <div class="jumbotron">
-        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-        {
-            <div class="row">
-                <label style="width:110px">Broj soba:</label>
-                @Html.TextBoxFor(m => m[0].TotalRooms, new { @style = "width:50px" })
-            </div>
-            <div class="row">
-                <label style="width:110px">Odraslih:</label>
-                @Html.TextBoxFor(m => m[0].MaxAdults, new { @style = "width:50px" })
-            </div>
-            <div class="row">
-                <label style="width:110px">Djece:</label>
-                @Html.TextBoxFor(m => m[0].MaxChildren, new { @style = "width:50px" })
-            </div>
-            <div class="row">
-                <input type="submit" style="width:164px; height:30px" class="btn btn-primary">
-            </div>
+            <div class="container" style="margin-top:70px">
+                <div class="jumbotron">
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+                    {
+                        projectLibrary.Models.Apartman a = new projectLibrary.Models.Apartman()
+                        {
 
-        }
-    </div>
-            <div class="row ">
-                @foreach (var item in Model)
-                {
+                        };
 
+                        Model.Add(a);
 
-                    <div class="col-md-2">
-                        <div class="box-shadow panel panel-default mb-5" style="width: 18rem;">
-                            <div class="panel-body">
-                                <a style="text-decoration:none" asp-action="Details" asp-controller="Books" asp-route-id="@item.Id">
-                                    <div style="overflow:hidden; height:fit-content">
-                                        <img class="panel-img-top" style=" transition: all .2s ease-in-out; height:250px;" src="https://i.stack.imgur.com/WU7o2.jpg">
-                                    </div>
-                                    <div class="panel-body">
-                                        <h5 class=" text-secondary panel-title">@item.Name</h5>
-                                        <p class="text-secondary panel-text">@item.TotalRooms</p>
-                                        <p class="panel-text btn btn-warning">HRK @item.Price/dan</p>
+                        //try?
+
+                        <div class="row">
+                            <label style="width:110px">Broj soba:</label>
+                            @Html.TextBoxFor(b => b[0].TotalRooms, new { Value = "", @style = "width:50px" })
+                        </div>
+                        <div class="row">
+                            <label style="width:110px">Odraslih:</label>
+                            @Html.TextBoxFor(b => b[0].MaxAdults, new { Value = "", @style = "width:50px" })
+                        </div>
+                        <div class="row">
+                            <label style="width:110px">Djece:</label>
+                            @Html.TextBoxFor(b => b[0].MaxChildren, new { Value = "", @style = "width:50px" })
+                        </div>
+                        <br />
+
+                        <div class="row">
+                            <label for="cars">Sortiraj po cijeni:</label>
 
 
+                            @Html.DropDownListFor(m => m[0].DropDownEnum,
+            new SelectList(Enum.GetValues(typeof(projectLibrary.Models.DropDownEnum))),
+            "-- odaberi --", new { @class = "form-control", @style = "width:164px" })
+                        </div>
 
-                                    </div>
-                                </a>
+                        Model.RemoveAt(Model.Count - 1);
+                        <br />
+                        <div class="row">
+                            <input type="submit" style="width:164px; height:30px" class="btn btn-primary">
+                        </div>
+                    }
+                </div>
+                <div class="row ">
+
+                    @{ 
+                        List<projectLibrary.Models.Apartman> sorted= new List<projectLibrary.Models.Apartman>();
+
+
+                    }
+
+                    @foreach (var item in Model)
+                    {
+                        // sort apts if ddlitem.selected here
+                        sorted.Add(item);
+                        sorted.Sort();
+                    }
+
+                    @foreach (var item in sorted)
+                    {
+
+
+                        <div class="col-md-2">
+                            <div class="box-shadow panel panel-default mb-5" style="width: 18rem;">
+                                <div class="panel-body">
+                                    <a style="text-decoration:none" asp-action="Details" asp-controller="Books" asp-route-id="@item.Id">
+                                        <div style="overflow:hidden; height:fit-content">
+                                            <img class="panel-img-top" style=" transition: all .2s ease-in-out; height:250px;" src="https://i.stack.imgur.com/WU7o2.jpg">
+                                        </div>
+                                        <div class="panel-body">
+                                            <h5 class=" text-secondary panel-title">@item.DropDownEnum</h5>
+                                            <p class="text-secondary panel-text">@item.TotalRooms</p>
+                                            <p class="panel-text btn btn-warning">HRK @item.Price/dan</p>
+
+
+
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                }
+                    }
+                </div>
             </div>
-        </div>

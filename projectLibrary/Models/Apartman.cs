@@ -5,8 +5,15 @@ using System.Web;
 
 namespace projectLibrary.Models
 {
-    public class Apartman
+
+    public enum DropDownEnum
     {
+        Uzlazno,
+        Silazno
+    }
+    public class Apartman:IComparable<Apartman>
+    {
+        public DropDownEnum DropDownEnum { get; set; }
         public int Id { get; set; }
         public string Guid { get; set; }
         public DateTime CreatedAt { get; set; }
@@ -26,12 +33,27 @@ namespace projectLibrary.Models
         public string HelperStatus { get; set; }
         public string FrontendHelperNameID { get; set; }
 
+        public int CompareTo(Apartman other)
+        {
+            if (this.Price < other.Price)
+            {
+                return 1;
+            }
+            else if (this.Price > other.Price)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
         public override string ToString()
         {
             return $"{Price}, {CreatedAt}, {DeletedAt}";
         }
 
-
-
+        
     }
 }

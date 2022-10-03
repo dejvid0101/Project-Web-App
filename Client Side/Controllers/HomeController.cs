@@ -24,6 +24,10 @@ namespace Client_Side.Controllers
             IList<projectLibrary.Models.Apartman> newlist=new List<projectLibrary.Models.Apartman>();
             IRepo db=new DBRepo();
             newlist=db.IndexFilter(um);
+            foreach (projectLibrary.Models.Apartman apt in newlist)
+            {
+                apt.DropDownEnum = um[0].DropDownEnum;
+            }
             return View(newlist);
         }
 
