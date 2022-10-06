@@ -75,7 +75,7 @@
         </div>
         <div class="col-lg-6">
             <fieldset class="border p-4">
-                <legend class="w-auto">Image editor</legend>
+                <legend class="w-auto">Image editor - first image on the list will be displayed on apartment carousel</legend>
                <asp:Repeater ID="RepeaterImg" runat="server">
                 <HeaderTemplate>
 

@@ -14,6 +14,17 @@ namespace Client_Side.Controllers
         {
             IRepo database=new DBRepo();
             IList<projectLibrary.Models.Apartman> apts = database.GetData2();
+            IList<Generic> paths = null;
+            foreach (Apartman apt in apts)
+            {
+                paths = database.GetImages(apt.Id);
+                if (paths.Count>0)
+                {
+apt.HelperPicturePath = paths[0].Name;
+                }
+                
+            }
+
             return View(apts);
         }
 
@@ -28,6 +39,42 @@ namespace Client_Side.Controllers
             {
                 apt.DropDownEnum = um[0].DropDownEnum;
             }
+
+            IList<Generic> paths = null;
+
+            foreach (Apartman apt in newlist)
+            {
+                paths = db.GetImages(apt.Id);
+                if (paths.Count > 0)
+                {
+                    apt.HelperPicturePath = paths[0].Name;
+                }
+
+            }
+
+            HttpCookie UPTotalRooms = new HttpCookie("UPTotalRooms");
+            // ADD EXCEPTION handling for when list is empty
+            UPTotalRooms.Value = newlist[0].TotalRooms.ToString();
+            UPTotalRooms.Expires.AddDays(5);
+
+            HttpCookie UPMaxAdults = new HttpCookie("UPMaxAdults");
+            UPMaxAdults.Value = newlist[0].MaxAdults.ToString();
+            UPMaxAdults.Expires.AddDays(5);
+
+            HttpCookie UPMaxChildren = new HttpCookie("UPMaxChildren");
+            UPMaxChildren.Value = newlist[0].MaxChildren.ToString();
+            UPMaxChildren.Expires.AddDays(5);
+
+            HttpCookie UPSorting = new HttpCookie("UPSorting");
+            UPSorting.Value = newlist[0].DropDownEnum.ToString();
+            UPSorting.Expires.AddDays(5);
+
+            Response.Cookies.Add(UPTotalRooms);
+            Response.Cookies.Add(UPMaxAdults);
+            Response.Cookies.Add(UPMaxChildren);
+            Response.Cookies.Add(UPSorting);
+
+
             return View(newlist);
         }
 

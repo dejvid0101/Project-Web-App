@@ -35,8 +35,8 @@
 
 
                             @Html.DropDownListFor(m => m[0].DropDownEnum,
-            new SelectList(Enum.GetValues(typeof(projectLibrary.Models.DropDownEnum))),
-            "-- odaberi --", new { @class = "form-control", @style = "width:164px" })
+new SelectList(Enum.GetValues(typeof(projectLibrary.Models.DropDownEnum))),
+"-- odaberi --", new { @class = "form-control", @style = "width:164px" })
                         </div>
 
                         Model.RemoveAt(Model.Count - 1);
@@ -44,13 +44,15 @@
                         <div class="row">
                             <input type="submit" style="width:164px; height:30px" class="btn btn-primary">
                         </div>
+
                     }
                 </div>
                 <div class="row ">
 
-                    @{ 
-                        List<projectLibrary.Models.Apartman> sorted= new List<projectLibrary.Models.Apartman>();
+                    @{
+                        List<projectLibrary.Models.Apartman> sorted = new List<projectLibrary.Models.Apartman>();
 
+                        HttpCookie c = HttpContext.Current.Response.Cookies["UPSorting"];
 
                     }
 
@@ -58,11 +60,28 @@
                     {
                         // sort apts if ddlitem.selected here
                         sorted.Add(item);
-                        sorted.Sort();
+
+
+
+                    }
+
+                    @{ 
+                        if (c.Value == "Uzlazno")
+                        {
+                            sorted.Sort((a, b) => a.Price.CompareTo(b.Price));
+                        }
+                        else if (c.Value == "Silazno")
+                        {
+                            sorted.Sort((a, b) => b.Price.CompareTo(a.Price));
+                        }
                     }
 
                     @foreach (var item in sorted)
                     {
+                        if (item.StatusId==3)
+                        {
+                            
+
 
 
                         <div class="col-md-2">
@@ -70,10 +89,10 @@
                                 <div class="panel-body">
                                     <a style="text-decoration:none" asp-action="Details" asp-controller="Books" asp-route-id="@item.Id">
                                         <div style="overflow:hidden; height:fit-content">
-                                            <img class="panel-img-top" style=" transition: all .2s ease-in-out; height:250px;" src="https://i.stack.imgur.com/WU7o2.jpg">
+                                            <img class="panel-img-top" style=" transition: all .2s ease-in-out; height:250px;" src="@item.HelperPicturePath">
                                         </div>
                                         <div class="panel-body">
-                                            <h5 class=" text-secondary panel-title">@item.DropDownEnum</h5>
+                                            <h5 class=" text-secondary panel-title">@item.Name</h5>
                                             <p class="text-secondary panel-text">@item.TotalRooms</p>
                                             <p class="panel-text btn btn-warning">HRK @item.Price/dan</p>
 
@@ -84,7 +103,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        }
                     }
                 </div>
             </div>
