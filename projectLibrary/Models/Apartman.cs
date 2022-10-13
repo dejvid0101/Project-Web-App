@@ -16,7 +16,7 @@ namespace projectLibrary.Models
     }
     public class Apartman
     {
-        public DropDownEnum DropDownEnum { get; set; }
+        public string DropDownEnum { get; set; }
         public int Id { get; set; }
         public string Guid { get; set; }
         public DateTime CreatedAt { get; set; }

@@ -1,109 +1,196 @@
 ﻿@{
     ViewBag.Title = "Home Page";
     @model IList<projectLibrary.Models.Apartman>
+        
 }
 
-            <div class="container" style="margin-top:70px">
-                <div class="jumbotron">
-                    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-                    {
-                        projectLibrary.Models.Apartman a = new projectLibrary.Models.Apartman()
-                        {
+<div class="container" style="margin-top:70px">
+    <div class="jumbotron">
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post, new {id ="sortForm"}))
+        {
+            projectLibrary.Models.Apartman a = new projectLibrary.Models.Apartman()
+            {
 
-                        };
+            };
 
-                        Model.Add(a);
+            Model.Add(a);
 
-                        //try?
+            //try?
 
-                        <div class="row">
-                            <label style="width:110px">Broj soba:</label>
-                            @Html.TextBoxFor(b => b[0].TotalRooms, new { Value = "", @style = "width:50px" })
-                        </div>
-                        <div class="row">
-                            <label style="width:110px">Odraslih:</label>
-                            @Html.TextBoxFor(b => b[0].MaxAdults, new { Value = "", @style = "width:50px" })
-                        </div>
-                        <div class="row">
-                            <label style="width:110px">Djece:</label>
-                            @Html.TextBoxFor(b => b[0].MaxChildren, new { Value = "", @style = "width:50px" })
-                        </div>
-                        <br />
+            <div class="row">
+                <label style="width:110px">Broj soba:</label>
+                @Html.TextBoxFor(b => b[0].TotalRooms, new { @id="inputTotalRooms", Value = "", @style = "width:50px" })
+            </div>
+            <div class="row">
+                <label style="width:110px">Odraslih:</label>
+                @Html.TextBoxFor(b => b[0].MaxAdults, new { @id = "inputMaxAdults", Value = "", @style = "width:50px" })
+            </div>
+            <div class="row">
+                <label style="width:110px">Djece:</label>
+                @Html.TextBoxFor(b => b[0].MaxChildren, new { @id = "inputMaxChildren", Value = "", @style = "width:50px" })
+            </div>
+            <br />
 
-                        <div class="row">
-                            <label for="cars">Sortiraj po cijeni:</label>
+            <div class="row">
+                <label for="cars">Sortiraj po cijeni:</label>
 
 
-                            @Html.DropDownListFor(m => m[0].DropDownEnum,
+                @Html.DropDownListFor(m => m[0].DropDownEnum,
 new SelectList(Enum.GetValues(typeof(projectLibrary.Models.DropDownEnum))),
-"-- odaberi --", new { @class = "form-control", @style = "width:164px" })
-                        </div>
+"-- odaberi --", new { @id="ddlEnum", @class = "form-control", @style = "width:164px" })
+            </div>
 
-                        Model.RemoveAt(Model.Count - 1);
-                        <br />
-                        <div class="row">
-                            <input type="submit" style="width:164px; height:30px" class="btn btn-primary">
-                        </div>
+            Model.RemoveAt(Model.Count - 1);
+            <br />
+            <div class="row">
+                <input type="submit"  style="width:164px; height:30px" value="Primijeni" class="btn btn-primary">
 
+            </div>
+
+        }
+    </div>
+
+    
+
+    <div class="row " id="aptPanel">
+        @{
+            List<projectLibrary.Models.Apartman> sorted = new List<projectLibrary.Models.Apartman>();
+
+            HttpCookie c = HttpContext.Current.Response.Cookies["UPSorting"];
+
+        }
+
+        @foreach (var item in Model)
+        {
+            // sort apts if ddlitem.selected here
+            sorted.Add(item);
+
+
+
+        }
+
+        @{
+            if (c.Value == "Uzlazno")
+            {
+                sorted.Sort((a, b) => a.Price.CompareTo(b.Price));
+            }
+            else if (c.Value == "Silazno")
+            {
+                sorted.Sort((a, b) => b.Price.CompareTo(a.Price));
+            }
+
+
+        }
+
+        @section scripts{
+            <text>
+                        <script>
+                // beim laden cookies lesen?
+
+                $(document).ready(function () {
+                    console.log("ockej");
+                });
+
+                $("#sortForm").submit(function (e) {
+                    e.preventDefault();
+                    document.getElementById("aptPanel").innerHTML = '';
+                    document.getElementById("aptPanel").insertAdjacentHTML("beforeend", 'Loading...');
+
+                    var $form = $(this);
+                    var term = $form.find("fname").val();
+                    var url = $form.attr("action");
+
+                    //create helper JS object with 4 attributes to display, pass to controller
+                    var apt = {
+                        TotalRooms : $("#inputTotalRooms").val(),
+                        MaxAdults:$("#inputMaxAdults").val(),
+                        MaxChildren:$("#inputMaxChildren").val(),
+                        DropDownEnum: $("#ddlEnum").val(),
                     }
-                </div>
-                <div class="row ">
-
-                    @{
-                        List<projectLibrary.Models.Apartman> sorted = new List<projectLibrary.Models.Apartman>();
-
-                        HttpCookie c = HttpContext.Current.Response.Cookies["UPSorting"];
-
-                    }
-
-                    @foreach (var item in Model)
-                    {
-                        // sort apts if ddlitem.selected here
-                        sorted.Add(item);
 
 
+                    console.log("ockej");
+                    $.ajax({
+                        type: "post",
+                        url: url,
+                        datatype: "json",
+                        data:apt,
+                        success: function (response) {
+                            //JS sort array and DOM manipulation
 
-                    }
-
-                    @{ 
-                        if (c.Value == "Uzlazno")
-                        {
-                            sorted.Sort((a, b) => a.Price.CompareTo(b.Price));
-                        }
-                        else if (c.Value == "Silazno")
-                        {
-                            sorted.Sort((a, b) => b.Price.CompareTo(a.Price));
-                        }
-                    }
-
-                    @foreach (var item in sorted)
-                    {
-                        if (item.StatusId==3)
-                        {
+                            const getCookieValue = (name) => (
+                                document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
+                            )
+                            var sortStr = getCookieValue("UPSorting");
                             
 
+                            var apts = response;
 
+                            if (sortStr == "Uzlazno") {
+                                apts.sort((firstItem, secondItem) => firstItem.Price - secondItem.Price);
+                                console.log("ušlo");
 
-                        <div class="col-md-2">
-                            <div class="box-shadow panel panel-default mb-5" style="width: 18rem;">
-                                <div class="panel-body">
-                                    <a style="text-decoration:none" asp-action="Details" asp-controller="Books" asp-route-id="@item.Id">
-                                        <div style="overflow:hidden; height:fit-content">
-                                            <img class="panel-img-top" style=" transition: all .2s ease-in-out; height:250px;" src="@item.HelperPicturePath">
-                                        </div>
-                                        <div class="panel-body">
-                                            <h5 class=" text-secondary panel-title">@item.Name</h5>
-                                            <p class="text-secondary panel-text">@item.TotalRooms</p>
-                                            <p class="panel-text btn btn-warning">HRK @item.Price/dan</p>
+                            } else if (sortStr == "Silazno") {
+                                apts.sort((firstItem, secondItem) => secondItem.Price - firstItem.Price);
+                                console.log("ušlo");
+                            }
 
 
 
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                            for (var i = 0; i < apts.length; i++) {
+                                var aptPanel = document.getElementById("aptPanel");
+                                if (i==0) {
+                                    aptPanel.innerHTML = '';
+                                }
+                                
+                                aptPanel.insertAdjacentHTML("beforeend", '<div class="col-md-2"><div class="box-shadow panel panel-default mb-5" style="width: 18rem;"><div class="panel-body"><a style="text-decoration:none" asp-action="Details" asp-controller="Books" asp-route-id=" ' + apts[i].Id + '"><div style="overflow:hidden; height:fit-content"><img class="panel-img-top" style=" transition: all .2s ease-in-out; height:250px;" src="' + apts[i].HelperPicturePath+'"></div ><div class="panel-body"><h5 class=" text-secondary panel-title">'+apts[i].Name+'</h5><p class="text-secondary panel-text">'+apts[i].TotalRooms+'</p><p class="panel-text btn btn-warning">HRK '+apts[i].Price+'/dan</p></div></a></div ></div ></div > ')
+                                // ajax fertig
+                            }
+
                         }
-                    }
+                    });
+                });
+
+
+
+
+
+
+
+                        </script>
+            </text>
+
+        }
+
+        @foreach (var item in sorted)
+        {
+            if (item.StatusId == 3)
+            {
+
+
+
+
+                <div class="col-md-2">
+                    <div class="box-shadow panel panel-default mb-5" style="width: 18rem;">
+                        <div class="panel-body">
+                            <a style="text-decoration:none" asp-action="Details" asp-controller="Books" asp-route-id="@item.Id">
+                                <div style="overflow:hidden; height:fit-content">
+                                    <img class="panel-img-top" style=" transition: all .2s ease-in-out; height:250px;" src="@item.HelperPicturePath">
+                                </div>
+                                <div class="panel-body">
+                                    <h5 class=" text-secondary panel-title">@item.Name</h5>
+                                    <p class="text-secondary panel-text">@item.TotalRooms</p>
+                                    <p class="panel-text btn btn-warning">HRK @item.Price/dan</p>
+
+
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            }
+        }
+    </div>
+</div>
+

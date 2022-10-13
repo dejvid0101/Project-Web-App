@@ -16,14 +16,14 @@ namespace projectLibrary.DAL
     {
         public string cs = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
 
-        public IList<Apartman> IndexFilter(IList<Apartman> a)
+        public IList<Apartman> IndexFilter(Apartman a)
         {
             IList<Apartman> apts = new List<Apartman>();
 
             int[] updateArgs = new int[3];
-            updateArgs[0] = a[0].TotalRooms;
-            updateArgs[1] = a[0].MaxAdults;
-            updateArgs[2] = a[0].MaxChildren;
+            updateArgs[0] = a.TotalRooms;
+            updateArgs[1] = a.MaxAdults;
+            updateArgs[2] = a.MaxChildren;
 
             DbParameter[] paramz= new DbParameter[updateArgs.Length];
             paramz[0] = new SqlParameter("TotalRooms",updateArgs[0]);
