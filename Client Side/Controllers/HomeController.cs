@@ -10,6 +10,12 @@ namespace Client_Side.Controllers
 {
     public class HomeController : Controller
     {
+
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
+
         public ActionResult Index()
         {
             IRepo database=new DBRepo();
