@@ -36,6 +36,7 @@ namespace projectLibrary.Models
         public string HelperStatus { get; set; }
         public string FrontendHelperNameID { get; set; }
         public string HelperPicturePath { get; set; }
+        public IList<Generic> HelperPicturePathCollection { get; set; }
 
 
 

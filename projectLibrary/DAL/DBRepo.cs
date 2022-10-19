@@ -85,6 +85,7 @@ namespace projectLibrary.DAL
                 MaxChildren = (int)row[nameof(Apartman.MaxChildren)],
                 TotalRooms = (int)row[nameof(Apartman.TotalRooms)],
                 BeachDistance = (int)row[nameof(Apartman.BeachDistance)]
+
             };
             apts.Add(apt);
             return apts;
@@ -127,7 +128,19 @@ namespace projectLibrary.DAL
             return data;
     }
 
+        public IList<int> GetTaggedApts(int id)
+        {
+            var dataSet = SqlHelper.ExecuteDataset(cs, nameof(GetTaggedApts),id).Tables[0];
+            DataRowCollection rows = dataSet.Rows;
+            IList<int> tagIds = new List<int>();
+            foreach (DataRow row in rows)
+            {
 
+                tagIds.Add((int)row["TagId"]);
+            }
+            return tagIds;
+
+        }
 
         public IList<Tag> GetTags() {
             var dataSet = SqlHelper.ExecuteDataset(cs, nameof(GetTags)).Tables[0];
@@ -614,6 +627,25 @@ data.Add(o);
 
 
             return data;
+        }
+
+        public Tag GetTag(int id)
+        {
+            var dataSet = SqlHelper.ExecuteDataset(cs, nameof(GetTag), id).Tables[0];
+            DataRowCollection rows = dataSet.Rows;
+            Tag t = new Tag();
+            foreach (DataRow row in rows)
+            {
+
+                t.Name = row["Name"].ToString();
+                    
+
+                //čitanje putanja slika iz baze za odabrani apartman
+                
+            };
+
+
+            return t;
         }
     }
 }

@@ -3,37 +3,37 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link href="~/Content/lightbox.css" rel="stylesheet" />
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content")
 
 </head>
 <body>
     <div class="navbar navbar-fixed-top navbar-default navbar-light bg-light" style=" color:#0026ff; background-color: #e3f2fd;">
-        
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
 
-                <ul class=" nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Item 1", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Item 2", "About", "Home")</li>
-                    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            </ul>
 
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+            <ul class=" nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("Item 1", "Index", "Home")</li>
+                <li>@Html.ActionLink("Item 2", "About", "Home")</li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+
+            </ul>
+            @Html.Partial("_LoginPartial")
+        </div>
     </div>
     <div class="container body-content">
         @RenderBody()
@@ -43,8 +43,9 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/Scripts")
+
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

@@ -10,10 +10,48 @@ namespace Client_Side.Controllers
 {
     public class HomeController : Controller
     {
+        [HttpGet]
+        public ActionResult GetTags(int id)
+        {
+            IRepo database = new DBRepo();
+            IList<int> tagIds;
+
+            tagIds = database.GetTaggedApts(id);
+
+            IList<projectLibrary.Models.Tag> tags=new List<projectLibrary.Models.Tag>();
+
+            foreach (var tagId in tagIds)
+            {
+                tags.Add(database.GetTag(tagId));
+            }
+            
+            return Json(tags,JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult Details(int id)
         {
-            return View();
+            IRepo database = new DBRepo();
+            IList<Apartman> apts;
+
+            apts = database.Retrieve(id);
+
+            IList<Generic> paths;
+
+            foreach (Apartman a in apts)
+            {
+                
+                paths = database.GetImages(a.Id);
+                if (paths.Count > 0)
+                {
+                    // create image list attr on model to get all
+                    a.HelperPicturePathCollection = paths;
+                }
+
+            }
+
+            Apartman apt = apts[0];
+           
+            return View(apt);
         }
 
         public ActionResult Index()

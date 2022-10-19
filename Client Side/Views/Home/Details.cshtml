@@ -1,7 +1,151 @@
-﻿
+﻿@model projectLibrary.Models.Apartman
 @{
     ViewBag.Title = "Details";
 }
+<br />
+<br />
+<br />
+<br />
 
-<h2>Details</h2>
+<div class="row">
+    <div class="col-6">
+        <a asp-action="Index">&lt Natrag</a>
+        <br />
+        <br />
+        <h1>@Model.Name</h1>
+        <a class="text-secondary" asp-action="Details" asp-controller="Authors" asp-route-id="">
+            by
+        </a>
+        <br />
+        <br />
+        @foreach (projectLibrary.Models.Generic item in Model.HelperPicturePathCollection)
+        {
+            <a data-lightbox="img1" href="@item.Name">
+                <img style=" transition: all .2s ease-in-out; height:250px;" src="@item.Name" />
+            </a>
+        }
+        <!--edit frontend buttons-->
+        <br />
+    </div>
+    <div style="display:flex; flex-direction:column; justify-content:center" class="col-6">
+        <dl class="row">
+            <dt class="col-sm-2">
+                Udaljenost od mora:
+            </dt>
+            <dd class="col-sm-10">
+                @Model.BeachDistance
+            </dd>
+            <dt class="col-sm-2">
+                Broj osoba:
+            </dt>
+            <dd class="col-sm-10">
+                @Model.MaxAdults odraslih i @Model.MaxChildren djece
+            </dd>
+
+            @Html.HiddenFor(model => model.Id)
+
+            <dt class="col-sm-2">
+                Broj soba:
+            </dt>
+            <dd class="col-sm-10">
+                @Model.TotalRooms
+            </dd>
+
+
+
+
+
+        </dl>
+        <div>
+
+            <button style="width:30%; height:50px" class="mr-3 btn btn-primary" name="title" id="btnBuy">Kupi</button>
+
+
+            <button style="width:30%; height:50px" class="btn btn-info" name="title" id="btnRent">Posudi</button>
+
+        </div>
+    </div>
+</div>
+<div>
+
+    <div id="accordion" class="row">
+
+
+
+
+        <div id="rere" style="font-weight:bold" class=" col-sm-2" aria-expanded="true">
+            Opis knjige:
+        </div>
+
+        <div class="col-sm-10">
+
+            <span style="display:none;" id="moreText">
+
+
+                    </span>
+
+
+            <button class="btn btn-link" onclick="toggleText()" id="textButton">
+                Prikaži opis knjige
+            </button>
+
+
+
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+@section scripts{
+    <script src="~/Scripts/lightbox.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $.get("/Home/GetTags/" +@Model.Id, function (data, status) {
+                var tagspan = document.getElementById("moreText");
+                tagspan.innerHTML = '';
+
+                for (var i = 0; i < data.length; i++) {
+                    tagspan.insertAdjacentHTML("beforeend", "-"+data[i].Name+"<br/>");
+                }
+
+            });
+
+           
+            });
+
+
+
+
+    function toggleText() {
+
+
+    var showMoreText =
+    document.getElementById("moreText");
+
+    var buttonText =
+    document.getElementById("textButton");
+
+    if (showMoreText.style.display === "none") {
+
+    showMoreText.style.display = "inline";
+
+
+
+    buttonText.innerHTML = "Sakrij opis";
+    }
+
+    else {
+
+    showMoreText.style.display = "none";
+
+    buttonText.innerHTML = "Prikaži opis knjige";
+    }
+    }
+    </script>
+}
 
