@@ -9,6 +9,7 @@ namespace projectLibrary.DAL
 {
     public interface IRepo
     {
+        int AddReservation(Reservation r);
         IList<int> GetTaggedApts(int id);
         IList<Apartman> IndexFilter(Apartman a);
         IList<Generic> GetImages(int ApartmentId);

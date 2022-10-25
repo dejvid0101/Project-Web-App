@@ -8,15 +8,12 @@
 <br />
 
 <div class="row">
-    <div class="col-6">
+    <div class="col">
         <a asp-action="Index">&lt Natrag</a>
         <br />
         <br />
         <h1>@Model.Name</h1>
-        <a class="text-secondary" asp-action="Details" asp-controller="Authors" asp-route-id="">
-            by
-        </a>
-        <br />
+
         <br />
         @foreach (projectLibrary.Models.Generic item in Model.HelperPicturePathCollection)
         {
@@ -24,11 +21,11 @@
                 <img style=" transition: all .2s ease-in-out; height:250px;" src="@item.Name" />
             </a>
         }
-        <!--edit frontend buttons-->
+        <!--add contact info and reservation section-->
         <br />
     </div>
-    <div style="display:flex; flex-direction:column; justify-content:center" class="col-6">
-        <dl class="row">
+    <div class="col">
+        <dl>
             <dt class="col-sm-2">
                 Udaljenost od mora:
             </dt>
@@ -58,64 +55,164 @@
         </dl>
         <div>
 
-            <button style="width:30%; height:50px" class="mr-3 btn btn-primary" name="title" id="btnBuy">Kupi</button>
+            <a href="#rezervacija" style="width:30%; height:30px" class="mr-3 btn btn-default" name="title" id="btnBuy">Rezervacija</a>
 
 
-            <button style="width:30%; height:50px" class="btn btn-info" name="title" id="btnRent">Posudi</button>
 
         </div>
     </div>
 </div>
-<div>
-
-    <div id="accordion" class="row">
 
 
 
+<div class="row">
+    <div id="rere" style="font-weight:bold" class=" col-sm-2" aria-expanded="true">
+        Oznake:
+    </div>
 
-        <div id="rere" style="font-weight:bold" class=" col-sm-2" aria-expanded="true">
-            Opis knjige:
-        </div>
+    <div class="col-sm-10">
 
-        <div class="col-sm-10">
-
-            <span style="display:none;" id="moreText">
-
-
-                    </span>
+        <span style="display:none;" id="moreText">
 
 
-            <button class="btn btn-link" onclick="toggleText()" id="textButton">
-                Prikaži opis knjige
-            </button>
+        </span>
 
 
+        <button class="btn btn-link" onclick="toggleText()" id="textButton">
+            Prikaži oznake
+        </button>
 
-
-
-        </div>
 
 
     </div>
 
+</div>
+<hr />
+
+review system
+<hr />
+<div class="row">
+    <br />
+    <h4 id="rezervacija">Kontakt podaci</h4>
+    <br />
+   @{ 
+       Html.BeginForm("AddReservation", "Home", FormMethod.Post, new { id = "reservationForm" });
+           }
+        
+    
+
+    <label for="fname">Ime</label>
+    <br />
+    <input type="text" id="fname" class="form-control" style="width:200px" name="firstname" placeholder="Ime">
+    <br />
+    <label for="lname">Prezime</label>
+    <br />
+    <input type="text" id="lname" class="form-control" style="width:200px" name="lastname" placeholder="Prezime">
+    <br />
+    <label for="email">Email</label>
+    <br />
+    <input type="email" id="email" class="form-control" style="width:200px" name="email" placeholder="Email">
+    <br />
+    <label for="number">Telefonski broj</label>
+    <br />
+    <input type="number" id="number" class="form-control" style="width:200px" name="number" placeholder="Broj telefona">
+
+    <br />
+    <label for="adults">Broj osoba</label>
+    <br />
+    <input type="number" id="adults" class="form-control" style="width:200px" name="adults" placeholder="Broj osoba">
+    <br />
+    <label for="checkin">Datum dolaska</label>
+    <br />
+    <input type="date" id="checkin" class="form-control" style="width:200px" name="checkin" placeholder="">
+
+    <br />
+    <label for="checkout">Datum odlaska</label>
+    <br />
+    <input type="date" id="checkout" class="form-control" style="width:200px" name="checkout" placeholder="">
+
+    <br />
+    <label for="details">Napomene:</label>
+    <br />
+    <textarea type="text" id="details" class="form-control" style="width:200px" name="details" placeholder=""></textarea>
+
+    <br />
+
+    <input type="submit" class="btn btn-primary" value="Rezerviraj">
+    <!--add ajax form submit-->
+    
 </div>
 
 @section scripts{
     <script src="~/Scripts/lightbox.js"></script>
     <script>
 
-        $(document).ready(function () {
-            $.get("/Home/GetTags/" +@Model.Id, function (data, status) {
-                var tagspan = document.getElementById("moreText");
-                tagspan.innerHTML = '';
 
-                for (var i = 0; i < data.length; i++) {
-                    tagspan.insertAdjacentHTML("beforeend", "-"+data[i].Name+"<br/>");
-                }
+        @{ var user = HttpContext.Current.User.Identity;
 
+            var claimsIdentity = (System.Security.Claims.ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            string userId = "1";
+            bool isAuthenticated = false;
+            if (claim != null)
+            {
+                userId = claim.Value;
+                isAuthenticated = true;
+            }
+
+}
+        $("#reservationForm").submit(function (e) {
+                    e.preventDefault();
+
+                    var $form = $(this);
+                    var url = $form.attr("action");
+
+                    //create helper JS object with 4 attributes to display, pass to controller
+                    var reservation = {
+                ApartmentId: @Model.Id,
+                        Details: $("#details").val(),
+                       UserId: @userId,
+                UserName: $("#fname").val(),
+                UserEmail: $("#email").val(),
+                        UserPhone: $("#number").val(),
+                        IsAuthenticated: Boolean(@isAuthenticated.ToString().ToLower()),
+            }
+
+
+                console.log("ockej");
+            $.ajax({
+                type: "post",
+                url: url,
+                datatype: "json",
+                data: reservation,
+                success: function (response) {
+                        //JS sort array and DOM manipulation
+
+                        alert(response);
+
+
+
+                    }
+                });
             });
 
-           
+        $(document).ready(function () {
+            $.get("/Home/GetTags/" +@Model.Id, function (data, status) {
+                    var tagspan = document.getElementById("moreText");
+                    tagspan.innerHTML = '';
+
+                    for (var i = 0; i < data.length; i++) {
+                        tagspan.insertAdjacentHTML("beforeend", "-"+data[i].Name+"<br/>");
+                    }
+
+                });
+
+
+
+                document.getElementById("email").setAttribute("value", "@user.Name");
+
+
+
             });
 
 
@@ -124,28 +221,28 @@
     function toggleText() {
 
 
-    var showMoreText =
-    document.getElementById("moreText");
+                var showMoreText =
+                document.getElementById("moreText");
 
-    var buttonText =
-    document.getElementById("textButton");
+                var buttonText =
+                document.getElementById("textButton");
 
-    if (showMoreText.style.display === "none") {
+                if (showMoreText.style.display === "none") {
 
-    showMoreText.style.display = "inline";
+                    showMoreText.style.display = "inline";
 
 
 
-    buttonText.innerHTML = "Sakrij opis";
-    }
+                    buttonText.innerHTML = "Sakrij oznake";
+                }
 
-    else {
+                else {
 
-    showMoreText.style.display = "none";
+                    showMoreText.style.display = "none";
 
-    buttonText.innerHTML = "Prikaži opis knjige";
-    }
-    }
+                    buttonText.innerHTML = "Prikaži oznake";
+                }
+            }
     </script>
 }
 

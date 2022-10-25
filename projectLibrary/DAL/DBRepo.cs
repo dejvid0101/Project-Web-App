@@ -647,5 +647,54 @@ data.Add(o);
 
             return t;
         }
+
+        public int AddReservation(Reservation r)
+        {
+            SqlConnection c = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandType = CommandType.StoredProcedure,
+                CommandText = nameof(AddReservation)
+            };
+            cmd.Parameters.Add(nameof(r.ApartmentId), SqlDbType.Int).Value = r.ApartmentId;
+            cmd.Parameters.Add(nameof(r.Details), SqlDbType.NVarChar).Value = r.Details;
+            cmd.Parameters.Add(nameof(r.UserId), SqlDbType.Int).Value = r.UserId;
+            cmd.Parameters.Add(nameof(r.UserName), SqlDbType.NVarChar).Value = r.UserName;
+            cmd.Parameters.Add(nameof(r.UserEmail), SqlDbType.NVarChar).Value = r.UserEmail;
+            cmd.Parameters.Add(nameof(r.UserPhone), SqlDbType.NVarChar).Value = r.UserPhone;
+            cmd.Parameters.Add(nameof(r.IsAuthenticated), SqlDbType.Bit).Value = r.IsAuthenticated;
+
+            cmd.Connection = c;
+            try
+
+            {
+
+                c.Open();
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (Exception)
+
+            {
+
+                return 0;
+
+            }
+
+            finally
+
+            {
+
+                c.Close();
+
+                c.Dispose();
+
+            }
+
+            return 1;
+        }
+    
     }
 }

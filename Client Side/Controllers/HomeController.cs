@@ -10,6 +10,23 @@ namespace Client_Side.Controllers
 {
     public class HomeController : Controller
     {
+        [HttpPost]
+        public ActionResult AddReservation(Reservation r)
+        {
+            IRepo database = new DBRepo();
+            int result=database.AddReservation(r);
+
+            if (result==0)
+            {
+                return Json("Molimo pokušajte ponovno.", JsonRequestBehavior.AllowGet);
+            }
+            else 
+            {
+                return Json("Rezervacija zaprimljena.", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
         [HttpGet]
         public ActionResult GetTags(int id)
         {
