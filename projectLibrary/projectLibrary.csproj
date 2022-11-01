@@ -72,6 +72,7 @@
     <Compile Include="Models\Apartman.cs" />
     <Compile Include="Models\Generic.cs" />
     <Compile Include="Models\Reservation.cs" />
+    <Compile Include="Models\Review.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

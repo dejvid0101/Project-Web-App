@@ -1,4 +1,5 @@
-﻿using Microsoft.ApplicationBlocks.Data;
+﻿using Client_Side.Models;
+using Microsoft.ApplicationBlocks.Data;
 using projectLibrary.Models;
 using System;
 using System.Collections.Generic;
@@ -628,6 +629,72 @@ data.Add(o);
 
             return data;
         }
+
+        public int addReview(Review r)
+        {
+            SqlConnection c = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandType = CommandType.StoredProcedure,
+                CommandText = nameof(addReview)
+            };
+            cmd.Parameters.Add(nameof(r.ApartmentId), SqlDbType.Int).Value = r.ApartmentId;
+            cmd.Parameters.Add(nameof(r.UserId), SqlDbType.Int).Value = r.UserId;
+            cmd.Parameters.Add(nameof(r.Details), SqlDbType.NVarChar).Value = r.Details;
+            cmd.Parameters.Add(nameof(r.Stars), SqlDbType.Int).Value = r.Stars;
+
+            cmd.Connection = c;
+            try
+
+            {
+
+                c.Open();
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (Exception)
+
+            {
+
+                return 0;
+
+            }
+
+            finally
+
+            {
+
+                c.Close();
+
+                c.Dispose();
+
+            }
+            return 1;
+        }
+
+        public IList<Review> getReviews(int ApartmentId)
+        {
+            var dataSet = SqlHelper.ExecuteDataset(cs, nameof(getReviews), ApartmentId).Tables[0];
+            DataRowCollection rows = dataSet.Rows;
+            IList<Review> reviews = new List<Review>();
+            foreach (DataRow row in rows)
+            {
+                Review o = new Review
+                {
+                    Details = row["Details"].ToString(),
+                    Stars = (int)row["Stars"]
+
+                };
+                //čitanje putanja slika iz baze za odabrani apartman
+                reviews.Add(o);
+            }
+
+
+            return reviews;
+        }
+    
 
         public Tag GetTag(int id)
         {

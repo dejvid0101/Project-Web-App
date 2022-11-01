@@ -6,6 +6,7 @@
 
 <div class="container" style="margin-top:70px">
     <div class="jumbotron">
+        
         @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { id = "sortForm" }))
         {
             projectLibrary.Models.Apartman a = new projectLibrary.Models.Apartman()
@@ -115,13 +116,19 @@ new SelectList(Enum.GetValues(typeof(projectLibrary.Models.DropDownEnum))),
             }
         }
     </div>
+    
 </div>
 
+
+
+
+
+
+
+
 @section scripts{
+    
     <script>
-        // beim laden cookies lesen?
-
-
 
 
 

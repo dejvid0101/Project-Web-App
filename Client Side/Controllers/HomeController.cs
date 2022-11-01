@@ -3,28 +3,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using projectLibrary.DAL;
 using projectLibrary.Models;
+using Recaptcha.Web;
+using Recaptcha.Web.Mvc;
 
 namespace Client_Side.Controllers
 {
+
+
     public class HomeController : Controller
     {
         [HttpPost]
+        public ActionResult AddReview(Client_Side.Models.Review r)
+        {
+            IRepo db = new DBRepo();
+            int result=db.addReview(r);
+            if (result==1)
+            {
+                return Json("Recenzija zaprimljena", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("Nešto je pošlo po krivu", JsonRequestBehavior.AllowGet);
+            }
+
+        }
+       
         public ActionResult AddReservation(Reservation r)
         {
-            IRepo database = new DBRepo();
-            int result=database.AddReservation(r);
-
-            if (result==0)
+             if (r.CaptchaStatus=="\"\"")
             {
-                return Json("Molimo pokušajte ponovno.", JsonRequestBehavior.AllowGet);
+                return Json("Molimo potvrdite da niste robot.", JsonRequestBehavior.AllowGet);
             }
-            else 
+
+            IRepo database = new DBRepo();
+            int result = database.AddReservation(r);
+
+            if (result == 0)
+            {
+                return Json("Molimo ispravno popunite polje za rezervaciju.", JsonRequestBehavior.AllowGet);
+            }
+            else
             {
                 return Json("Rezervacija zaprimljena.", JsonRequestBehavior.AllowGet);
             }
         }
+
 
 
         [HttpGet]
@@ -35,14 +61,24 @@ namespace Client_Side.Controllers
 
             tagIds = database.GetTaggedApts(id);
 
-            IList<projectLibrary.Models.Tag> tags=new List<projectLibrary.Models.Tag>();
+            IList<projectLibrary.Models.Tag> tags = new List<projectLibrary.Models.Tag>();
 
             foreach (var tagId in tagIds)
             {
                 tags.Add(database.GetTag(tagId));
             }
-            
-            return Json(tags,JsonRequestBehavior.AllowGet);
+
+            return Json(tags, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult GetReviews(int ApartmentId)
+        {
+            IRepo database = new DBRepo();
+            IList<Client_Side.Models.Review> result;
+            result = database.getReviews(ApartmentId);
+            return Json(result, JsonRequestBehavior.AllowGet);
+
         }
 
         public ActionResult Details(int id)

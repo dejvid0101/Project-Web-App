@@ -1,6 +1,8 @@
 ﻿@model projectLibrary.Models.Apartman
+@using Recaptcha.Web.Mvc;
 @{
     ViewBag.Title = "Details";
+
 }
 <br />
 <br />
@@ -88,18 +90,19 @@
 
 </div>
 <hr />
-
-review system
+<h3>Recenzije</h3>
+<br />
+@Html.Partial("_Review", new ViewDataDictionary { { "id", Model.Id } })
 <hr />
 <div class="row">
     <br />
     <h4 id="rezervacija">Kontakt podaci</h4>
     <br />
-   @{ 
-       Html.BeginForm("AddReservation", "Home", FormMethod.Post, new { id = "reservationForm" });
-           }
-        
-    
+    @{
+        Html.BeginForm("AddReservation", "Home", FormMethod.Post, new { id = "reservationForm" });
+    }
+
+
 
     <label for="fname">Ime</label>
     <br />
@@ -137,15 +140,20 @@ review system
     <textarea type="text" id="details" class="form-control" style="width:200px" name="details" placeholder=""></textarea>
 
     <br />
+    <div class="g-recaptcha"
+         data-sitekey="6LfupcIiAAAAAGfiSDScCs914fqQqpyakvFeiSVh"></div>
 
+    <br />
     <input type="submit" class="btn btn-primary" value="Rezerviraj">
-    <!--add ajax form submit-->
-    
+
+
+
 </div>
 
 @section scripts{
     <script src="~/Scripts/lightbox.js"></script>
     <script>
+
 
 
         @{ var user = HttpContext.Current.User.Identity;
@@ -163,7 +171,7 @@ review system
 }
         $("#reservationForm").submit(function (e) {
                     e.preventDefault();
-
+            var captcharesponse = grecaptcha.getResponse();
                     var $form = $(this);
                     var url = $form.attr("action");
 
@@ -176,6 +184,7 @@ review system
                 UserEmail: $("#email").val(),
                         UserPhone: $("#number").val(),
                         IsAuthenticated: Boolean(@isAuthenticated.ToString().ToLower()),
+                        CaptchaStatus: JSON.stringify(captcharesponse)
             }
 
 
@@ -197,10 +206,22 @@ review system
             });
 
         $(document).ready(function () {
-            $.get("/Home/GetTags/" +@Model.Id, function (data, status) {
-                    var tagspan = document.getElementById("moreText");
-                    tagspan.innerHTML = '';
 
+
+            $.get("/Home/GetTags/" +@Model.Id, function (data, status) {
+                console.log(data);
+                    var tagspan = document.getElementById("moreText");
+                tagspan.innerHTML = '';
+                @{
+                    if (claim!=null)
+                    {
+                        <text>console.log("in");</text>
+                    }
+                    else
+                    {
+                        <text>console.log("out");</text>
+                    }
+                 }
                     for (var i = 0; i < data.length; i++) {
                         tagspan.insertAdjacentHTML("beforeend", "-"+data[i].Name+"<br/>");
                     }

@@ -9,6 +9,8 @@ namespace projectLibrary.DAL
 {
     public interface IRepo
     {
+        int addReview(Client_Side.Models.Review r);
+        IList<Client_Side.Models.Review> getReviews(int ApartmentId);
         int AddReservation(Reservation r);
         IList<int> GetTaggedApts(int id);
         IList<Apartman> IndexFilter(Apartman a);

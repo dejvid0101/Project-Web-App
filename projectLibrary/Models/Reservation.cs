@@ -15,5 +15,6 @@ namespace projectLibrary.Models
         public string UserEmail { get; set; }
         public string UserPhone { get; set; }
         public bool IsAuthenticated { get; set; }
+        public string CaptchaStatus { get; set; }
     }
 }
