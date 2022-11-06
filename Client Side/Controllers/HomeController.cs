@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
@@ -109,6 +111,7 @@ namespace Client_Side.Controllers
 
         public ActionResult Index()
         {
+
             IRepo database=new DBRepo();
             IList<projectLibrary.Models.Apartman> apts = database.GetData2();
             IList<Generic> paths = null;

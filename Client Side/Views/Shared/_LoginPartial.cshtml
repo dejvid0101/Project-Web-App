@@ -1,22 +1,95 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@{
+    string cltr = null;
+    if (HttpContext.Current.Request.Cookies["culturecookie"] == null)
+    {
+        cltr = new System.Globalization.CultureInfo("en-US").ToString();
+    }
+    else
+    {
+        cltr = HttpContext.Current.Request.Cookies["culturecookie"].Value;
+    }
+    System.Globalization.CultureInfo enCulture = new System.Globalization.CultureInfo("en-US");
+
+    if (cltr == "EN")
+    {
+        System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+
+    }
+    else
+    {
+        System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("hr-HR");
+    }
+
+
+}
+
+@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @{
+                    string hello;
+                    if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                    {
+                        hello="Hello ";
+                    }
+                    else
+                    {
+                        hello="Bok ";
+                    }
+
+                }
+                @Html.ActionLink(hello + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">
+    @{
+        if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+        {
+            <text>Log off</text>
+        }
+        else
+        {
+            <text>Odjava</text>
+        }
+
+    }
+</a></li>
+        </ul>
     }
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
+<ul class="nav navbar-nav navbar-right">
+    @{
+        string register;
+        if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+        {
+            register = "Register";
+        }
+        else
+        {
+            register = "Registracija";
+        }
+
+    }
+    <li>@Html.ActionLink(register, "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+    @{
+        string login;
+        if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+        {
+            login="Log in";
+        }
+        else
+        {
+            login="Prijava";
+        }
+
+    }
+    <li>@Html.ActionLink(login, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+</ul>
 }

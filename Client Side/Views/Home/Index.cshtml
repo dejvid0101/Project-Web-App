@@ -2,6 +2,28 @@
     ViewBag.Title = "Home Page";
     @model IList<projectLibrary.Models.Apartman>
 
+    string cltr = null;
+    if (HttpContext.Current.Request.Cookies["culturecookie"] == null)
+    {
+        cltr = new System.Globalization.CultureInfo("en-US").ToString();
+    }
+    else
+    {
+        cltr = HttpContext.Current.Request.Cookies["culturecookie"].Value;
+    }
+    System.Globalization.CultureInfo enCulture = new System.Globalization.CultureInfo("en-US");
+
+    if (cltr == "EN")
+    {
+        System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+
+    }
+    else
+    {
+        System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("hr-HR");
+    }
+
+
 }
 
 <div class="container" style="margin-top:70px">
@@ -19,32 +41,99 @@
             //try?
 
             <div class="row">
-                <label style="width:110px">Broj soba:</label>
+                <label style="width:110px">
+                    @{
+                        if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                        {
+                            <text>No. of rooms:</text>
+                        }
+                        else
+                        {
+                            <text>Broj soba:</text>
+                        }
+
+                    }
+                </label>
                 @Html.TextBoxFor(b => b[0].TotalRooms, new { @id = "inputTotalRooms", Value = "", @style = "width:50px" })
             </div>
             <div class="row">
-                <label style="width:110px">Odraslih:</label>
+                <label style="width:110px">
+                    @{
+
+                        if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                        {
+                            <text>Adults:</text>
+                        }
+                        else
+                        {
+                            <text>Odraslih:</text>
+                        }
+                                }
+                            </label>
                 @Html.TextBoxFor(b => b[0].MaxAdults, new { @id = "inputMaxAdults", Value = "", @style = "width:50px" })
             </div>
             <div class="row">
-                <label style="width:110px">Djece:</label>
+                <label style="width:110px">
+                    @{
+                        if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                        {
+                            <text>Children:</text>
+                        }
+                        else
+                        {
+                            <text>Djece:</text>
+                        }
+
+                                }
+                            </label>
                 @Html.TextBoxFor(b => b[0].MaxChildren, new { @id = "inputMaxChildren", Value = "", @style = "width:50px" })
             </div>
             <br />
 
             <div class="row">
-                <label for="cars">Sortiraj po cijeni:</label>
+                <label for="cars">
+                    @{
+                        if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                        {
+                            <text>Sort by price:</text>
+                        }
+                        else
+                        {
+                            <text>Sortiraj po cijeni:</text>
+                        }
 
-
+                    }
+                </label>
+                @{ 
+                    string odaberi;
+                    if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                    {
+                        odaberi = "sort by";
+                    }
+                    else
+                    {
+                        odaberi="odaberi";
+                    }
+                }
                 @Html.DropDownListFor(m => m[0].DropDownEnum,
 new SelectList(Enum.GetValues(typeof(projectLibrary.Models.DropDownEnum))),
-"-- odaberi --", new { @id = "ddlEnum", @class = "form-control", @style = "width:164px" })
+"-- "+odaberi+" --", new { @id = "ddlEnum", @class = "form-control", @style = "width:164px" })
             </div>
 
             Model.RemoveAt(Model.Count - 1);
             <br />
             <div class="row">
-                <input type="submit" style="width:164px; height:30px" value="Primijeni" class="btn btn-primary">
+                <input type="submit" style="width:164px; height:30px" value="@{
+                        if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                        {
+                            <text>Apply</text>
+                        }
+                        else
+                        {
+                            <text>Primijeni</text>
+                        }
+
+                    }" class="btn btn-primary">
 
             </div>
 
@@ -103,10 +192,20 @@ new SelectList(Enum.GetValues(typeof(projectLibrary.Models.DropDownEnum))),
                             </div>
                             <div class="panel-body">
                                 <h5 class=" text-secondary panel-title">@item.Name</h5>
-                                <p class="text-secondary panel-text">@item.TotalRooms</p>
-                                @Html.ActionLink("HRK " + @item.Price + "/dan", "Details", "Home", new { @id = item.Id }, new { @class = "panel-text btn btn-warning" })
+                                <p class="text-secondary panel-text">@item.TotalRooms</p>@{ 
+                                    string dan;
+                                    if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                                    {
+                                        dan = "day";
+                                    }
+                                    else
+                                    {
+                                        dan = "dan";
+                                    }
+                                }
+                                @Html.ActionLink("HRK " + @item.Price + "/" + dan, "Details", "Home", new { @id = item.Id }, new { @class = "panel-text btn btn-warning" })
 
-
+                                    
 
                             </div>
 

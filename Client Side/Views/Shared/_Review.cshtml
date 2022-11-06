@@ -1,47 +1,112 @@
-﻿
+﻿@{
+    var user = HttpContext.Current.User.Identity;
+
+    var claimsIdentity = (System.Security.Claims.ClaimsIdentity)this.User.Identity;
+    var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+    string userId = "1";
+    string cltr = null;
+    if (HttpContext.Current.Request.Cookies["culturecookie"] == null)
+    {
+        cltr = new System.Globalization.CultureInfo("en-US").ToString();
+    }
+    else
+    {
+        cltr = HttpContext.Current.Request.Cookies["culturecookie"].Value;
+    }
+    System.Globalization.CultureInfo enCulture = new System.Globalization.CultureInfo("en-US");
+
+    if (cltr == "EN")
+    {
+        System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+
+    }
+    else
+    {
+        System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("hr-HR");
+    }
+
+
+}
 
 <table class="table table-condensed" id="table">
 </table>
 <br />
+@{
+    if (claim != null)
+    {
+        <label style="font-weight:lighter" for="stars">
+            
 
-<label style="font-weight:lighter" for="stars">Odaberite ocjenu:</label>
-@{ 
-    Html.BeginForm("AddReview", "Home", FormMethod.Post, new { @id = "reviewForm" });
-                   }
-        <select id="stars">
+                @if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                {
+                    <text>Choose a rating:</text>
+                }
+                else
+                {
+                    <text>Odaberite ocjenu:</text>
+                }
+
+            
+        </label>
 
 
-            <option value="5">5</option>
-        
-            <option value="4">4</option>
+        using (Html.BeginForm("AddReview", "Home", FormMethod.Post, new { @id = "reviewForm" }))
+        {
+            <select id="stars">
 
 
-            <option value="3">3</option>
-        
-            <option value="2">2</option>
+                <option value="5">5</option>
+
+                <option value="4">4</option>
 
 
-            <option value="1">1</option>
-        </select>
-        <br />
-        <br />
-        <input type="text" id="details" placeholder="Upišite svoje mišljenje..." />
-        <br />
-        <br />
-        <button class="btn-default" type="submit">Pošalji</button>
-<br />
-<br />
-        
+                <option value="3">3</option>
 
+                <option value="2">2</option>
+
+
+                <option value="1">1</option>
+            </select>
+            <br />
+            <br />
+            <input type="text" id="details" placeholder="@{
+
+        if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+        {
+            <text>Tell us what you think</text>
+        }
+        else
+        {
+            <text>Upišite svoje mišljenje</text>
+        }
+
+}" />
+            <br />
+            <br />
+            <input class="btn-default" type="submit" value="@{
+
+        if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+        {
+            <text>Submit</text>
+        }
+        else
+        {
+            <text>Pošalji</text>
+        }
+
+}" />
+
+
+            <br />
+            <br />
+        }
+    }
+}
 
 <script src="~/Scripts/jquery-3.4.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script>
-     @{ var user = HttpContext.Current.User.Identity;
-
-            var claimsIdentity = (System.Security.Claims.ClaimsIdentity)this.User.Identity;
-            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
-            string userId = "1";
+     @{
             if (claim != null)
             {
                 userId = claim.Value;
@@ -54,6 +119,7 @@
 
                     var $form = $(this);
         var url = $form.attr("action");
+        console.log(url);
         var stars = document.getElementById("stars");
 
         if ($("#details").val() == "") {

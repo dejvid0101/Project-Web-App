@@ -724,7 +724,15 @@ data.Add(o);
                 CommandText = nameof(AddReservation)
             };
             cmd.Parameters.Add(nameof(r.ApartmentId), SqlDbType.Int).Value = r.ApartmentId;
-            cmd.Parameters.Add(nameof(r.Details), SqlDbType.NVarChar).Value = r.Details;
+            
+            if (r.Details==null)
+            {
+                cmd.Parameters.Add(nameof(r.Details), SqlDbType.NVarChar).Value = " ";
+            }
+            else if (r.Details!=null)
+            {
+                cmd.Parameters.Add(nameof(r.Details), SqlDbType.NVarChar).Value = r.Details;
+            }
             cmd.Parameters.Add(nameof(r.UserId), SqlDbType.Int).Value = r.UserId;
             cmd.Parameters.Add(nameof(r.UserName), SqlDbType.NVarChar).Value = r.UserName;
             cmd.Parameters.Add(nameof(r.UserEmail), SqlDbType.NVarChar).Value = r.UserEmail;

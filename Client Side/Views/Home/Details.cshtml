@@ -1,7 +1,33 @@
 ﻿@model projectLibrary.Models.Apartman
 @using Recaptcha.Web.Mvc;
 @{
+    var user = HttpContext.Current.User.Identity;
+
+    var claimsIdentity = (System.Security.Claims.ClaimsIdentity)this.User.Identity;
+    var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+    string userId = "1";
+    string cltr = null;
     ViewBag.Title = "Details";
+    if (HttpContext.Current.Request.Cookies["culturecookie"]==null)
+    {
+        cltr = new System.Globalization.CultureInfo("en-US").ToString();
+    }
+            else { 
+    cltr= HttpContext.Current.Request.Cookies["culturecookie"].Value;
+    }
+    
+    System.Globalization.CultureInfo enCulture = new System.Globalization.CultureInfo("en-US");
+
+    if (cltr == "EN")
+    {
+        System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+
+    }
+    else
+    {
+        System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("hr-HR");
+    }
+
 
 }
 <br />
@@ -11,8 +37,6 @@
 
 <div class="row">
     <div class="col">
-        <a asp-action="Index">&lt Natrag</a>
-        <br />
         <br />
         <h1>@Model.Name</h1>
 
@@ -29,23 +53,78 @@
     <div class="col">
         <dl>
             <dt class="col-sm-2">
-                Udaljenost od mora:
+                @{
+
+                    if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                    {
+                        <text>Beach distance:</text>
+                    }
+                    else
+                    {
+                        <text>Udaljenost od mora:</text>
+                    }
+
+                }
             </dt>
             <dd class="col-sm-10">
                 @Model.BeachDistance
             </dd>
             <dt class="col-sm-2">
-                Broj osoba:
+                @{
+
+                    if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                    {
+                        <text>Occupancy:</text>
+                    }
+                    else
+                    {
+                        <text>Broj osoba:</text>
+                    }
+
+                }
             </dt>
             <dd class="col-sm-10">
-                @Model.MaxAdults odraslih i @Model.MaxChildren djece
+                @Model.MaxAdults @{
+
+                    if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                    {
+                        <text>adults and:</text>
+                    }
+                    else
+                    {
+                        <text>odraslih i</text>
+                    }
+
+                } @Model.MaxChildren @{
+
+                    if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                    {
+                        <text>children</text>
+                    }
+                    else
+                    {
+                        <text>djece</text>
+                    }
+
+                }
             </dd>
 
             @Html.HiddenFor(model => model.Id)
 
-            <dt class="col-sm-2">
-                Broj soba:
-            </dt>
+        <dt class="col-sm-2">
+            @{
+
+                if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                {
+                    <text>No. of rooms:</text>
+                }
+                else
+                {
+                    <text>Broj soba:</text>
+                }
+
+            }
+        </dt>
             <dd class="col-sm-10">
                 @Model.TotalRooms
             </dd>
@@ -57,7 +136,20 @@
         </dl>
         <div>
 
-            <a href="#rezervacija" style="width:30%; height:30px" class="mr-3 btn btn-default" name="title" id="btnBuy">Rezervacija</a>
+            <a href="#rezervacija" style="width:30%; height:30px" class="mr-3 btn btn-default" name="title" id="btnBuy">
+                @{
+
+                    if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                    {
+                        <text>Place reservation</text>
+                    }
+                    else
+                    {
+                        <text>Rezervacija</text>
+                        }
+
+                    }
+            </a>
 
 
 
@@ -69,7 +161,18 @@
 
 <div class="row">
     <div id="rere" style="font-weight:bold" class=" col-sm-2" aria-expanded="true">
-        Oznake:
+        @{
+
+            if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+            {
+                <text>Tags:</text>
+            }
+            else
+            {
+                <text>Oznake:</text>
+            }
+
+        }
     </div>
 
     <div class="col-sm-10">
@@ -81,7 +184,18 @@
 
 
         <button class="btn btn-link" onclick="toggleText()" id="textButton">
-            Prikaži oznake
+            @{
+
+                if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                {
+                    <text>Show tags</text>
+                }
+                else
+                {
+                    <text>Prikaži oznake</text>
+                }
+
+            }
         </button>
 
 
@@ -90,77 +204,243 @@
 
 </div>
 <hr />
-<h3>Recenzije</h3>
+<h3>
+    @{
+
+        if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+        {
+            <text>Reviews</text>
+        }
+        else
+        {
+            <text>Recenzije</text>
+        }
+
+}
+</h3>
 <br />
 @Html.Partial("_Review", new ViewDataDictionary { { "id", Model.Id } })
 <hr />
 <div class="row">
     <br />
-    <h4 id="rezervacija">Kontakt podaci</h4>
+    <h4 id="rezervacija">
+        @{
+
+            if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+            {
+                <text>Contact info</text>
+            }
+            else
+            {
+                <text>Kontakt podaci</text>
+            }
+
+        }
+    </h4>
     <br />
-    @{
-        Html.BeginForm("AddReservation", "Home", FormMethod.Post, new { id = "reservationForm" });
+    @using (Html.BeginForm("AddReservation", "Home", FormMethod.Post, new { id = "reservationForm" }))
+    {
+        <label for="fname">
+            @{
+
+                if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                {
+                    <text>Name</text>
+                }
+                else
+                {
+                    <text>Ime</text>
+                }
+
+            }
+        </label>
+        <br />
+        <input type="text" id="fname" class="form-control" style="width:200px" name="firstname" placeholder="@{
+
+        if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+        {
+            <text>Name</text>
+        }
+        else
+        {
+            <text>Ime</text>
+        }
+
+    }">
+        <br />
+        <label for="lname">
+            @{
+
+                if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                {
+                    <text>Surname</text>
+                }
+                else
+                {
+                    <text>Prezime</text>
+                }
+
+            }
+        </label>
+        <br />
+        <input type="text" id="lname" class="form-control" style="width:200px" name="lastname" placeholder="@{
+
+            if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+            {
+                <text>Surname</text>
+            }
+            else
+            {
+                <text>Prezime</text>
+            }
+
+        }">
+        <br />
+        <label for="email">Email</label>
+        <br />
+        <input type="email" id="email" class="form-control" style="width:200px" name="email" placeholder="Email">
+        <br />
+        <label for="number">
+            @{
+
+                if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                {
+                    <text>Phone number</text>
+                }
+                else
+                {
+                    <text>Telefonski broj</text>
+                }
+
+            }
+        </label>
+        <br />
+        <input type="number" id="number" class="form-control" style="width:200px" name="number" placeholder="">
+
+        <br />
+        <label for="adults">
+            @{
+
+                if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                {
+                    <text>Guests</text>
+                }
+                else
+                {
+                    <text>Broj osoba</text>
+                }
+
+            }
+        </label>
+        <br />
+        <input type="number" id="adults" class="form-control" style="width:200px" name="adults" placeholder="">
+        <br />
+        <label for="checkin">
+            @{
+
+                if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                {
+                    <text>Checkin date</text>
+                }
+                else
+                {
+                    <text>Datum dolaska</text>
+                }
+
+            }
+        </label>
+        <br />
+        <input type="date" id="checkin" class="form-control" style="width:200px" name="checkin" placeholder="">
+
+        <br />
+        <label for="checkout">
+            @{
+
+                if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                {
+                    <text>Checkout date</text>
+                }
+                else
+                {
+                    <text>Datum odlaska</text>
+                }
+
+            }
+        </label>
+        <br />
+        <input type="date" id="checkout" class="form-control" style="width:200px" name="checkout" placeholder="">
+
+        <br />
+        <label for="details">
+            @{
+
+                if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                {
+                    <text>Additional information:</text>
+                }
+                else
+                {
+                    <text>Napomene:</text>
+                }
+
+            }
+        </label>
+        <br />
+        <textarea type="text" id="details" class="form-control" style="width:200px" name="details" placeholder=""></textarea>
+
+        
+
+            if (claim != null)
+            {
+                userId = claim.Value;
+            }
+
+            if (claim == null)
+            {
+                <text><br />
+                    <div class="g-recaptcha"
+                         data-sitekey="6LfupcIiAAAAAGfiSDScCs914fqQqpyakvFeiSVh"></div>
+
+                </text>
+            }
+        
+
+
+
+
+        <br />
+        <input type="submit" class="btn btn-primary" value="@{
+
+        if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+        {
+                <text>Place reservation</text>
+            }
+            else
+            {
+                <text>Rezerviraj</text>
+            }
+
+        }">
+
+
+
     }
+    
 
 
 
-    <label for="fname">Ime</label>
-    <br />
-    <input type="text" id="fname" class="form-control" style="width:200px" name="firstname" placeholder="Ime">
-    <br />
-    <label for="lname">Prezime</label>
-    <br />
-    <input type="text" id="lname" class="form-control" style="width:200px" name="lastname" placeholder="Prezime">
-    <br />
-    <label for="email">Email</label>
-    <br />
-    <input type="email" id="email" class="form-control" style="width:200px" name="email" placeholder="Email">
-    <br />
-    <label for="number">Telefonski broj</label>
-    <br />
-    <input type="number" id="number" class="form-control" style="width:200px" name="number" placeholder="Broj telefona">
 
-    <br />
-    <label for="adults">Broj osoba</label>
-    <br />
-    <input type="number" id="adults" class="form-control" style="width:200px" name="adults" placeholder="Broj osoba">
-    <br />
-    <label for="checkin">Datum dolaska</label>
-    <br />
-    <input type="date" id="checkin" class="form-control" style="width:200px" name="checkin" placeholder="">
-
-    <br />
-    <label for="checkout">Datum odlaska</label>
-    <br />
-    <input type="date" id="checkout" class="form-control" style="width:200px" name="checkout" placeholder="">
-
-    <br />
-    <label for="details">Napomene:</label>
-    <br />
-    <textarea type="text" id="details" class="form-control" style="width:200px" name="details" placeholder=""></textarea>
-
-    <br />
-    <div class="g-recaptcha"
-         data-sitekey="6LfupcIiAAAAAGfiSDScCs914fqQqpyakvFeiSVh"></div>
-
-    <br />
-    <input type="submit" class="btn btn-primary" value="Rezerviraj">
-
-
-
+  
 </div>
 
 @section scripts{
     <script src="~/Scripts/lightbox.js"></script>
     <script>
 
+        
 
-
-        @{ var user = HttpContext.Current.User.Identity;
-
-            var claimsIdentity = (System.Security.Claims.ClaimsIdentity)this.User.Identity;
-            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
-            string userId = "1";
+        @{ 
+            
             bool isAuthenticated = false;
             if (claim != null)
             {
@@ -170,12 +450,18 @@
 
 }
         $("#reservationForm").submit(function (e) {
-                    e.preventDefault();
-            var captcharesponse = grecaptcha.getResponse();
-                    var $form = $(this);
-                    var url = $form.attr("action");
+            e.preventDefault();
+            var captcharesponse = "!03";
+            @{ if (claim==null)
+                {
+                    <text>captcharesponse = grecaptcha.getResponse();</text>
+                }
+                
+                }
+                var $form = $(this);
+            var url = $form.attr("action");
+            console.log($("#fname").val());
 
-                    //create helper JS object with 4 attributes to display, pass to controller
                     var reservation = {
                 ApartmentId: @Model.Id,
                         Details: $("#details").val(),
@@ -184,14 +470,14 @@
                 UserEmail: $("#email").val(),
                         UserPhone: $("#number").val(),
                         IsAuthenticated: Boolean(@isAuthenticated.ToString().ToLower()),
-                        CaptchaStatus: JSON.stringify(captcharesponse)
+                        CaptchaStatus: JSON.stringify(captcharesponse),
             }
 
 
                 console.log("ockej");
             $.ajax({
                 type: "post",
-                url: url,
+                url: "/Home/AddReservation",
                 datatype: "json",
                 data: reservation,
                 success: function (response) {
@@ -254,14 +540,24 @@
 
 
 
-                    buttonText.innerHTML = "Sakrij oznake";
+                    buttonText.innerHTML = "@{
+
+                    if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                    {<text>Hide tags</text>}
+                    else
+                    {<text>Sakrij oznake</text>}}";
                 }
 
                 else {
 
                     showMoreText.style.display = "none";
 
-                    buttonText.innerHTML = "Prikaži oznake";
+                    buttonText.innerHTML = "@{
+
+                    if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                    {<text>Show tags</text>}
+                    else
+                    {<text>Prikaži oznake</text>}}";
                 }
             }
     </script>

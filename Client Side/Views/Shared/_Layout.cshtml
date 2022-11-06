@@ -1,11 +1,36 @@
-﻿<!DOCTYPE html>
+﻿@{
+    string cltr = null;
+    if (HttpContext.Current.Request.Cookies["culturecookie"] == null)
+    {
+        cltr = new System.Globalization.CultureInfo("en-US").ToString();
+    }
+    else
+    {
+        cltr = HttpContext.Current.Request.Cookies["culturecookie"].Value;
+    }
+    System.Globalization.CultureInfo enCulture = new System.Globalization.CultureInfo("en-US");
+
+    if (cltr == "EN")
+    {
+        System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+
+    }
+    else
+    {
+        System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("hr-HR");
+    }
+
+
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="~/Content/lightbox.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
-    
+
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <script type="text/javascript"
             src='https://www.google.com/recaptcha/api.js'></script>
@@ -13,6 +38,8 @@
 
 </head>
 <body>
+
+
     <div class="navbar navbar-fixed-top navbar-default navbar-light bg-light" style=" color:#0026ff; background-color: #e3f2fd;">
 
         <div class="navbar-header">
@@ -25,20 +52,74 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("About", "About", "Home")</li>
-                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                @{
+                    string home;
+                    if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                    {
+                        home = "Home";
+                    }
+                    else
+                    {
+                        home = "Početna";
+                    }
+
+                }
+                <li>@Html.ActionLink(home, "Index", "Home")</li>
+
+                @*<li>@Html.ActionLink("About", "About", "Home")</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
             </ul>
 
             <ul class=" nav navbar-nav navbar-right">
-                <li>@Html.ActionLink("Item 1", "Index", "Home")</li>
-                <li>@Html.ActionLink("Item 2", "About", "Home")</li>
-                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                @*<li>@Html.ActionLink("Item 1", "Index", "Home")</li>
+            <li>@Html.ActionLink("Item 2", "About", "Home")</li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>*@
 
             </ul>
             @Html.Partial("_LoginPartial")
+            <input type="hidden" id="culturefield" name="custId" value="@{
+                    if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                    {<text>HR</text>}
+                    else
+                    {<text>EN</text>}
+
+                }">
+            <button id="btnCulture" onclick="changeCulture()" style="box-sizing: border-box; appearance: none; background-color: transparent; border: 2px solid BLACK; border-radius: 0.6em; cursor: pointer; display: flex; align-self: center; font-size: 1rem; font-weight: 400; line-height: 1; margin: 10px 0 0 0; padding: 0.6em 1.4em; text-decoration: none; text-align: center; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-weight: 700;">
+                @{
+                    if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                    {<text>HR</text>}
+                    else
+                    {<text>EN</text>}
+
+                }
+            </button>
         </div>
     </div>
+
+    <script>
+        function changeCulture() {
+
+            const getCookieValue = (name) => (
+                document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
+            )
+
+
+            if (document.getElementById("culturefield").value =="HR")
+            {
+                document.cookie = "culturecookie=HR";
+                console.log("Change to " + getCookieValue("culturecookie"));
+                }
+                else
+            {
+                document.cookie = "culturecookie=EN";
+                console.log("Change to " + getCookieValue("culturecookie"));
+                }
+
+            location.reload();
+
+            }
+    </script>
+
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -46,6 +127,7 @@
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
+
 
 
     @Scripts.Render("~/bundles/jquery")
