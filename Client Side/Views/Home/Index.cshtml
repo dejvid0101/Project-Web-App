@@ -186,13 +186,13 @@ new SelectList(Enum.GetValues(typeof(projectLibrary.Models.DropDownEnum))),
                     <div class="box-shadow panel panel-default mb-5" style="width: 18rem;">
                         <div class="panel-body">
 
-
+                            
                             <div style="overflow:hidden; height:fit-content">
-                                <img class="panel-img-top" style=" transition: all .2s ease-in-out; height:250px;" src="..\..\@item.HelperPicturePath">
+                                <img class="panel-img-top" style=" transition: all .2s ease-in-out; height:250px;" alt="No image available" src="..\..\@item.HelperPicturePath">
                             </div>
                             <div class="panel-body">
                                 <h5 class=" text-secondary panel-title">@item.Name</h5>
-                                <p class="text-secondary panel-text">@item.TotalRooms</p>@{ 
+                                <p class="text-secondary panel-text">@item.TotalRooms</p>@{
                                     string dan;
                                     if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
                                     {
@@ -205,7 +205,7 @@ new SelectList(Enum.GetValues(typeof(projectLibrary.Models.DropDownEnum))),
                                 }
                                 @Html.ActionLink("HRK " + @item.Price + "/" + dan, "Details", "Home", new { @id = item.Id }, new { @class = "panel-text btn btn-warning" })
 
-                                    
+
 
                             </div>
 
@@ -232,7 +232,8 @@ new SelectList(Enum.GetValues(typeof(projectLibrary.Models.DropDownEnum))),
 
 
         $(document).ready(function () {
-            console.log("ockej");
+
+
         });
 
         $("#sortForm").submit(function (e) {
@@ -279,7 +280,14 @@ new SelectList(Enum.GetValues(typeof(projectLibrary.Models.DropDownEnum))),
                         console.log("ušlo");
                     }
 
+                    if (Object.keys(apts).length === 0) {
+                        document.getElementById("aptPanel").innerHTML = '';
+                        document.getElementById("aptPanel").insertAdjacentHTML("beforeend", '<h3>@{if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
+                        {<text>No apartments match this filter</text>}
+                        else
+                        {<text>Nema podataka za prikaz</text>}}</h3>');
 
+                    }
 
                     for (var i = 0; i < apts.length; i++) {
                         var aptPanel = document.getElementById("aptPanel");
@@ -287,9 +295,11 @@ new SelectList(Enum.GetValues(typeof(projectLibrary.Models.DropDownEnum))),
                             aptPanel.innerHTML = '';
                         }
 
+
+
                         if (apts[i].StatusId == 3) {
 
-                             
+
                             aptPanel.insertAdjacentHTML("beforeend", '<div class="col-md-2"><div class="box-shadow panel panel-default mb-5" style="width: 18rem;"><div class="panel-body"><a style="text-decoration:none" href="\\Home\\Details\\' + apts[i].Id + '"><div style="overflow:hidden; height:fit-content"><img class="panel-img-top" style=" transition: all .2s ease-in-out; height:250px;" src="..\\..\\' + apts[i].HelperPicturePath + '"></div ><div class="panel-body"><h5 class=" text-secondary panel-title">' + apts[i].Name + '</h5><p class="text-secondary panel-text">' + apts[i].TotalRooms + '</p><p class="panel-text btn btn-warning">HRK ' + apts[i].Price + '/dan</p></div></a></div ></div ></div > ')
 
                         }

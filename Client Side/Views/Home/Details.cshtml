@@ -8,14 +8,14 @@
     string userId = "1";
     string cltr = null;
     ViewBag.Title = "Details";
-    if (HttpContext.Current.Request.Cookies["culturecookie"]==null)
+    if (HttpContext.Current.Request.Cookies["culturecookie"] == null)
     {
         cltr = new System.Globalization.CultureInfo("en-US").ToString();
     }
-            else { 
-    cltr= HttpContext.Current.Request.Cookies["culturecookie"].Value;
+    else {
+        cltr = HttpContext.Current.Request.Cookies["culturecookie"].Value;
     }
-    
+
     System.Globalization.CultureInfo enCulture = new System.Globalization.CultureInfo("en-US");
 
     if (cltr == "EN")
@@ -41,13 +41,23 @@
         <h1>@Model.Name</h1>
 
         <br />
-        @foreach (projectLibrary.Models.Generic item in Model.HelperPicturePathCollection)
-        {
-            <a data-lightbox="img1" href="..\..\@item.Name">
-                <img style=" transition: all .2s ease-in-out; height:250px;" src="..\..\@item.Name" />
-            </a>
+        @{ if (Model.HelperPicturePathCollection == null)
+            {
+                <text><a data-lightbox="img1" href="..\..\zz\no-image-available-icon-photo-camera-flat-vector-illustration-132483141.jpg">
+                        <img style=" transition: all .2s ease-in-out; height:250px;" src="..\..\..\..\zz\no-image-available-icon-photo-camera-flat-vector-illustration-132483141.jpg" />
+                    </a></text>
+            } else
+            {
+                foreach (projectLibrary.Models.Generic item in Model.HelperPicturePathCollection)
+                {
+                    <text><a data-lightbox="img1" href="..\..\@item.Name">
+                            <img style=" transition: all .2s ease-in-out; height:250px;" src="..\..\@item.Name" />
+                        </a></text>
+                }
+            };
+
+
         }
-        <!--add contact info and reservation section-->
         <br />
     </div>
     <div class="col">
@@ -88,7 +98,7 @@
 
                     if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
                     {
-                        <text>adults and:</text>
+                        <text>adults and</text>
                     }
                     else
                     {

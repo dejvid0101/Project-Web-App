@@ -154,27 +154,34 @@ apt.HelperPicturePath = paths[0].Name;
 
             }
 
-            HttpCookie UPTotalRooms = new HttpCookie("UPTotalRooms");
-            // ADD EXCEPTION handling for when list is empty
-            UPTotalRooms.Value = newList[0].TotalRooms.ToString();
-            UPTotalRooms.Expires.AddDays(5);
+            if (newList.Count!=0)
+            {
 
-            HttpCookie UPMaxAdults = new HttpCookie("UPMaxAdults");
-            UPMaxAdults.Value = newList[0].MaxAdults.ToString();
-            UPMaxAdults.Expires.AddDays(5);
 
-            HttpCookie UPMaxChildren = new HttpCookie("UPMaxChildren");
-            UPMaxChildren.Value = newList[0].MaxChildren.ToString();
-            UPMaxChildren.Expires.AddDays(5);
 
-            HttpCookie UPSorting = new HttpCookie("UPSorting");
-            UPSorting.Value = newList[0].DropDownEnum;
-            UPSorting.Expires.AddDays(5);
+                HttpCookie UPTotalRooms = new HttpCookie("UPTotalRooms");
+                // ADD EXCEPTION handling for when list is empty
+                UPTotalRooms.Value = newList[0].TotalRooms.ToString();
+                //out of range exception
+                UPTotalRooms.Expires.AddDays(5);
 
-            Response.Cookies.Add(UPTotalRooms);
-            Response.Cookies.Add(UPMaxAdults);
-            Response.Cookies.Add(UPMaxChildren);
-            Response.Cookies.Add(UPSorting);
+                HttpCookie UPMaxAdults = new HttpCookie("UPMaxAdults");
+                UPMaxAdults.Value = newList[0].MaxAdults.ToString();
+                UPMaxAdults.Expires.AddDays(5);
+
+                HttpCookie UPMaxChildren = new HttpCookie("UPMaxChildren");
+                UPMaxChildren.Value = newList[0].MaxChildren.ToString();
+                UPMaxChildren.Expires.AddDays(5);
+
+                HttpCookie UPSorting = new HttpCookie("UPSorting");
+                UPSorting.Value = newList[0].DropDownEnum;
+                UPSorting.Expires.AddDays(5);
+
+                Response.Cookies.Add(UPTotalRooms);
+                Response.Cookies.Add(UPMaxAdults);
+                Response.Cookies.Add(UPMaxChildren);
+                Response.Cookies.Add(UPSorting);
+            }
 
 
             return Json(newList,JsonRequestBehavior.AllowGet);
