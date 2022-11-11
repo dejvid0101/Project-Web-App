@@ -11,9 +11,22 @@ namespace Prroject_Web_App
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (IsPostBack)
+            string[] s = new string[2];
+            s[0] = "admin";
+            s[1] = "12345678";
+            string[] d = (string[])Application["login"];
+            if (d == null)
+            {
+                Response.Redirect("/");
+            }
+            if (d[0] == s[0] && d[1] == s[1])
             {
 
+            }
+
+            else
+            {
+                Response.Redirect("/");
             }
         }
 

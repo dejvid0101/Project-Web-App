@@ -44,16 +44,6 @@ namespace Prroject_Web_App
 
             if (IsPostBack)
             {
-                TextBox1.Text = null;
-                TextBox2.Text = null;
-                TextBox3.Text = null;
-                TextBox4.Text = null;
-                TextBox5.Text = null;
-                TextBoxAddress.Text = null;
-                TextBoxAptName.Text = null;
-                TextBoxCity.Text = null;
-                TextBoxOwner.Text = null;
-                // set postback values to null
             }
 
 
@@ -100,6 +90,7 @@ namespace Prroject_Web_App
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            
             try
             {
             int[] updateArgs=new int[5];
@@ -131,6 +122,8 @@ namespace Prroject_Web_App
         protected void BtnUpdateStatus_Click(object sender, EventArgs e)
         {
             string value = ddlStatus.SelectedItem.Value.Trim();
+            
+
             int idStatus = 0;
             if (value == "Zauzeto")
             {
@@ -230,6 +223,11 @@ LabelName.Text = "Molimo odaberite vrijednost";
         protected void BtnOwner_Click(object sender, EventArgs e)
         {
             Response.Redirect("Owners.aspx");
+        }
+        
+        protected void BtnUsers_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Users.aspx");
         }
 
         protected void btnCity_Click(object sender, EventArgs e)

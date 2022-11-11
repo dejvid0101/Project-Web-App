@@ -16,6 +16,30 @@ namespace projectLibrary.DAL
     public class DBRepo : IRepo
     {
         public string cs = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
+        public string cs2 = ConfigurationManager.ConnectionStrings["cs2"].ConnectionString;
+
+        public IList<Generic> GetUsers()
+        {
+            var dataSet = SqlHelper.ExecuteDataset(cs2, nameof(GetUsers)).Tables[0];
+            DataRowCollection rows = dataSet.Rows;
+            IList<Generic> data = new List<Generic>();
+            foreach (DataRow row in rows)
+            {
+                Generic g = new Generic
+                {
+                    Id = (int)row[nameof(Apartman.Id)],
+                    Name = row["Email"].ToString(),
+                    
+                };
+
+                data.Add(g);
+
+
+            }
+            return data;
+
+
+        }
 
         public IList<Apartman> IndexFilter(Apartman a)
         {

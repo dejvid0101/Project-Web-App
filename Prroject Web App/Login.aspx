@@ -76,6 +76,7 @@
                             <asp:Button runat="server" OnClick="BtnOwner_Click" Text="Owners" class="btn btn-primary"></asp:Button>
                         </div>
                     </div>
+                    </div>
                     <asp:Label ID="LabelCity" runat="server" Text="City ID:"></asp:Label>
                     <div class="row">
                         <div class="col-10">
@@ -176,11 +177,12 @@
                 <asp:Button OnClick="BtnUpdateStatus_Click" CommandArgument="<%#Eval(TextBox1.Text) %>"
                     ID="BtnUpdateStatus" runat="server"
                     CssClass="btn btn-primary mt-3" Text="Update" />
-        </div>
+         <asp:Button runat="server" OnClick="BtnUsers_Click" Text="Users" class="btn btn-warning mt-3"></asp:Button>
+                       
         </fieldset>
             
             
-          
+         
 
     </div>
 

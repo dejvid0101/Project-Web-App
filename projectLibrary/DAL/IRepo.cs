@@ -9,6 +9,7 @@ namespace projectLibrary.DAL
 {
     public interface IRepo
     {
+        IList<Generic> GetUsers();
         int addReview(Client_Side.Models.Review r);
         IList<Client_Side.Models.Review> getReviews(int ApartmentId);
         int AddReservation(Reservation r);
