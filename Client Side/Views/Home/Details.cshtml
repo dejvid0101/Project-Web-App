@@ -66,13 +66,9 @@
                 @{
 
                     if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
-                    {
-                        <text>Beach distance:</text>
-                    }
+                    {<text>Beach distance:</text>}
                     else
-                    {
-                        <text>Udaljenost od mora:</text>
-                    }
+                    {<text>Udaljenost od mora:</text>}
 
                 }
             </dt>
@@ -83,13 +79,9 @@
                 @{
 
                     if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
-                    {
-                        <text>Occupancy:</text>
-                    }
+                    {<text>Occupancy:</text>}
                     else
-                    {
-                        <text>Broj osoba:</text>
-                    }
+                    {<text>Broj osoba:</text>}
 
                 }
             </dt>
@@ -97,24 +89,16 @@
                 @Model.MaxAdults @{
 
                     if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
-                    {
-                        <text>adults and</text>
-                    }
+                    {<text>adults and</text>}
                     else
-                    {
-                        <text>odraslih i</text>
-                    }
+                    {<text>odraslih i</text>}
 
                 } @Model.MaxChildren @{
 
                     if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
-                    {
-                        <text>children</text>
-                    }
+                    {<text>children</text>}
                     else
-                    {
-                        <text>djece</text>
-                    }
+                    {<text>djece</text>}
 
                 }
             </dd>
@@ -268,13 +252,9 @@
         <input type="text" id="fname" class="form-control" style="width:200px" name="firstname" placeholder="@{
 
         if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
-        {
-            <text>Name</text>
-        }
+        {<text>Name</text>}
         else
-        {
-            <text>Ime</text>
-        }
+        {<text>Ime</text>}
 
     }">
         <br />
@@ -282,12 +262,10 @@
             @{
 
                 if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
-                {
-                    <text>Surname</text>
+                {<text>Surname</text>
                 }
                 else
-                {
-                    <text>Prezime</text>
+                {<text>Prezime</text>
                 }
 
             }
@@ -296,12 +274,10 @@
         <input type="text" id="lname" class="form-control" style="width:200px" name="lastname" placeholder="@{
 
             if (System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == enCulture.ToString())
-            {
-                <text>Surname</text>
+            {<text>Surname</text>
             }
             else
-            {
-                <text>Prezime</text>
+            {<text>Prezime</text>
             }
 
         }">
